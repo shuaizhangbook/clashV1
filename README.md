@@ -1,16 +1,175 @@
-# React + Vite
+# ArgusVPN Dashboard
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+一个现代化的 VPN 管理仪表板，采用 React + Vite 构建，具有高级 3D 登录页面和专业的深色主题界面。
 
-Currently, two official plugins are available:
+![License](https://img.shields.io/badge/license-MIT-blue.svg)
+![React](https://img.shields.io/badge/React-18.3.1-61dafb.svg)
+![Vite](https://img.shields.io/badge/Vite-7.2.4-646cff.svg)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## ✨ 特性
 
-## React Compiler
+### 🎨 视觉设计
+- **3D 登录页面**：交互式星空背景，流星动画，3D 倾斜效果
+- **高级深色主题**：专业的深蓝黑配色（#020617 背景，#050B1C 卡片）
+- **全宽响应式布局**：最大宽度 1440px，适配各种屏幕尺寸
+- **统一视觉节奏**：24px 间距，圆角卡片，微光效果
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+### 📊 仪表板功能
 
-## Expanding the ESLint configuration
+#### 第一行：概览信息
+- **Hero 套餐卡**：
+  - 实时倒计时（精确到秒）
+  - 动态状态颜色（正常/即将到期/已过期）
+  - 使用进度条
+  - 续费/升级按钮
+- **关键指标卡**（2x2 网格）：
+  - 会员时长剩余
+  - 流量使用情况（带百分比）
+  - 在线设备数量
+  - 钱包余额和优惠券
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+#### 第二行：状态监控
+- **连接状态卡**：心电图动画，实时延迟和丢包率显示
+- **通知广播条**：自动轮播公告（4秒切换），支持展开/收起
+- **安全状态卡**：DNS 泄露保护、Kill Switch、异常登录监控
+
+#### 第三行：数据分析
+- **流量图表**：
+  - 7天/30天数据切换
+  - 双线图（上传/下载）
+  - Hover 显示详细数据
+  - 初始绘制动画
+- **当前服务器卡**：服务器详情、延迟、负载、协议信息
+- **连接日志卡**：最近 5 条连接记录，查看全部功能
+
+### 🎭 交互动效
+- 卡片 Hover：轻微上浮（-2px）+ 阴影增强
+- 按钮 Hover：渐变亮度提升 + 外发光
+- 图表动画：从左到右缓慢绘制（2秒）
+- 通知自动轮播：每 4 秒切换一次
+
+### 🌐 国际化
+- 支持中文/英文双语切换
+- 所有界面元素完整翻译
+
+## 🚀 快速开始
+
+### 环境要求
+- Node.js >= 16.0.0
+- npm >= 7.0.0
+
+### 安装
+
+```bash
+# 克隆仓库
+git clone https://github.com/shuaizhangbook/clashV1.git
+cd clashV1
+
+# 安装依赖
+npm install
+```
+
+### 开发
+
+```bash
+# 启动开发服务器
+npm run dev
+
+# 访问 http://localhost:5173
+```
+
+### 构建
+
+```bash
+# 构建生产版本
+npm run build
+
+# 预览生产构建
+npm run preview
+```
+
+## 🔐 登录凭证
+
+开发环境下，任意非空的邮箱和密码即可登录。
+
+示例：
+- 邮箱：`admin@argus.net`
+- 密码：`admin123`
+
+## 📁 项目结构
+
+```
+vpn-login/
+├── src/
+│   ├── App.jsx           # 主应用组件（登录页 + 仪表板）
+│   ├── config.js         # 3D 效果和视觉配置
+│   ├── index.css         # 全局样式和动画
+│   └── main.jsx          # 应用入口
+├── public/               # 静态资源
+├── tailwind.config.js    # Tailwind CSS 配置
+├── vite.config.js        # Vite 配置
+└── package.json          # 项目依赖
+```
+
+## 🛠️ 技术栈
+
+- **前端框架**：React 18.3.1
+- **构建工具**：Vite 7.2.4
+- **样式方案**：Tailwind CSS 3.4.17
+- **图标库**：Lucide React 0.468.0
+- **开发语言**：JavaScript (ES6+)
+
+## 🎨 设计系统
+
+### 颜色规范
+- **背景色**：`#020617` (深蓝黑)
+- **卡片背景**：`#050B1C/90` (半透明深蓝)
+- **边框**：`rgba(255,255,255,0.05)` (极低透明度白色)
+- **状态颜色**：
+  - 成功/正常：绿色 (`#10b981`)
+  - 警告/即将到期：橙色 (`#f59e0b`)
+  - 错误/已过期：红色 (`#ef4444`)
+
+### 间距规范
+- 卡片间距：24px (`gap-6`)
+- 卡片内边距：24px (`p-6`)
+- 圆角：20px (`rounded-[20px]`)
+
+### 动画时长
+- 快速交互：300ms
+- 中等过渡：500ms
+- 图表绘制：2000ms
+
+## 📝 配置说明
+
+### 3D 效果配置 (`src/config.js`)
+
+可以调整以下参数：
+- 星星数量和大小
+- 流星频率和速度
+- 3D 倾斜角度
+- 鼠标响应灵敏度
+
+### 仪表板数据
+
+当前使用模拟数据，可在 `src/App.jsx` 中修改：
+- 套餐到期时间
+- 流量使用情况
+- 在线设备数量
+- 服务器列表
+
+## 🤝 贡献
+
+欢迎提交 Issue 和 Pull Request！
+
+## 📄 许可证
+
+MIT License
+
+## 👨‍💻 作者
+
+Created with ❤️ by ArgusVPN Team
+
+---
+
+**注意**：本项目仅用于学习和演示目的，不包含实际的 VPN 连接功能。
