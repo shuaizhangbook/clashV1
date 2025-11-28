@@ -1,0 +1,953 @@
+import React, { useState, useEffect } from 'react';
+import { Shield, Bell, Rocket, Lock, Gift, Crown, Activity, Zap, Globe, Check, X, ChevronRight, Power, Settings, User, CreditCard, LogOut, Download, Headphones } from 'lucide-react';
+import { CONFIG, isMobile, getConfig } from './config';
+
+const translations = {
+  en: {
+    navWhy: 'Why Argus?',
+    navPricing: 'Pricing',
+    navSupport: 'Support',
+    navDownload: 'Download',
+    installBtn: 'Install ArgusVPN',
+    signInTitle: 'Sign in to ArgusVPN',
+    signInSubtitle: 'Secure access to your private network.',
+    labelIdentity: 'Email / Username',
+    labelPassword: 'Password',
+    forgotPassword: 'Forgot password?',
+    signInBtn: 'Sign in',
+    noAccount: "Don't have an account?",
+    createOne: 'Create one',
+    footerText: 'Protected by zero-knowledge encryption. 30-day money-back guarantee.',
+    placeholderEmail: 'agent@argus.net',
+    placeholderPassword: '••••••••••••',
+    systemId: 'SYSTEM_ID: 8X-2991',
+    encryption: 'ENCRYPTION: AES-256-GCM'
+  },
+  zh: {
+    navWhy: '关于 Argus?',
+    navPricing: '价格方案',
+    navSupport: '技术支持',
+    navDownload: '下载客户端',
+    installBtn: '安装 ArgusVPN',
+    signInTitle: '登录 ArgusVPN',
+    signInSubtitle: '安全连接您的私有网络。',
+    labelIdentity: '邮箱 / 用户名',
+    labelPassword: '密码',
+    forgotPassword: '忘记密码？',
+    signInBtn: '登录',
+    noAccount: '还没有账号？',
+    createOne: '立即注册',
+    footerText: '采用零知识加密保护。30天无理由退款保证。',
+    placeholderEmail: 'agent@argus.net',
+    placeholderPassword: '••••••••••••',
+    systemId: '系统编号: 8X-2991',
+    encryption: '加密协议: AES-256-GCM'
+  }
+};
+
+// Background Layer: Stars and Meteors
+function BackgroundLayer() {
+  const [stars, setStars] = useState([]);
+  const [activeMeteors, setActiveMeteors] = useState([]);
+  const [mobile, setMobile] = useState(isMobile());
+
+  // Star generation
+  useEffect(() => {
+    const starConfig = getConfig('stars');
+    const starArray = Array.from({ length: starConfig.count }, (_, i) => ({
+      id: i,
+      left: Math.random() * 100,
+      top: Math.random() * starConfig.maxTop,
+      size: starConfig.minSize + Math.random() * (starConfig.maxSize - starConfig.minSize),
+      delay: Math.random() * 3,
+      duration: starConfig.minDuration + Math.random() * (starConfig.maxDuration - starConfig.minDuration)
+    }));
+    setStars(starArray);
+  }, [mobile]);
+
+  // Meteor System
+  useEffect(() => {
+    const meteorConfig = getConfig('meteors');
+    if (!meteorConfig.enabled) return;
+
+    let meteorIdCounter = 0;
+    const spawnMeteor = () => {
+      setActiveMeteors(prev => {
+        if (prev.length >= meteorConfig.maxVisible) return prev;
+
+        const isForeground = Math.random() > 0.5;
+        const direction = Math.random() > 0.5 ? 'left-to-right' : 'right-to-left';
+        const duration = meteorConfig.minDuration + Math.random() * (meteorConfig.maxDuration - meteorConfig.minDuration);
+        const tailLength = meteorConfig.minTailLength + Math.random() * (meteorConfig.maxTailLength - meteorConfig.minTailLength);
+        const width = meteorConfig.minWidth + Math.random() * (meteorConfig.maxWidth - meteorConfig.minWidth);
+
+        let startX, startY, endX, endY;
+
+        if (direction === 'left-to-right') {
+          startX = -10 - Math.random() * 20;
+          startY = Math.random() * 60; // Top 60%
+          endX = 110 + Math.random() * 20;
+          endY = startY + 20 + Math.random() * 40; // Downward slope
+        } else {
+          startX = 110 + Math.random() * 20;
+          startY = Math.random() * 60;
+          endX = -10 - Math.random() * 20;
+          endY = startY + 20 + Math.random() * 40;
+        }
+
+        const newMeteor = {
+          id: meteorIdCounter++,
+          startX,
+          startY,
+          endX,
+          endY,
+          distanceX: endX - startX,
+          distanceY: endY - startY,
+          duration,
+          tailLength,
+          width,
+          isForeground,
+          opacity: isForeground ? meteorConfig.foregroundOpacity : meteorConfig.backgroundOpacity
+        };
+
+        setTimeout(() => {
+          setActiveMeteors(current => current.filter(m => m.id !== newMeteor.id));
+        }, duration * 1000);
+
+        return [...prev, newMeteor];
+      });
+
+      const nextSpawn = meteorConfig.minSpawnInterval + Math.random() * (meteorConfig.maxSpawnInterval - meteorConfig.minSpawnInterval);
+      timeoutId = setTimeout(spawnMeteor, nextSpawn);
+    };
+
+    let timeoutId = setTimeout(spawnMeteor, 1000);
+    return () => clearTimeout(timeoutId);
+  }, [mobile]);
+
+  // Advanced Meteor System Override for Dashboard
+  useEffect(() => {
+    if (!mobile) return; // Only apply simple logic on mobile or specific conditions if needed, currently keeping original logic above for main
+    // The previous edit introduced a nested useEffect which was incorrect. 
+    // We will stick to the main meteor logic above which is robust.
+  }, [mobile]);
+
+  return (
+    <div className="fixed inset-0 overflow-hidden pointer-events-none z-0">
+      {/* Deep Space Gradient Background */}
+      <div
+        className="absolute inset-0 transition-colors duration-1000"
+        style={{
+          background: `radial-gradient(circle at 50% 120%, #1a237e 0%, #000000 60%)`
+        }}
+      />
+
+      {/* Dynamic Nebulas */}
+      <div className="absolute inset-0 opacity-30 mix-blend-screen animate-pulse" style={{ background: 'radial-gradient(circle at 20% 30%, rgba(76, 29, 149, 0.4) 0%, transparent 40%)', animationDuration: '10s' }} />
+      <div className="absolute inset-0 opacity-20 mix-blend-screen animate-pulse" style={{ background: 'radial-gradient(circle at 80% 70%, rgba(59, 130, 246, 0.4) 0%, transparent 40%)', animationDuration: '15s' }} />
+
+      {/* Stars */}
+      {stars.map(star => (
+        <div
+          key={star.id}
+          className="absolute rounded-full bg-white"
+          style={{
+            left: `${star.left}%`,
+            top: `${star.top}%`,
+            width: `${star.size}px`,
+            height: `${star.size}px`,
+            animation: `twinkle ${star.duration}s ease-in-out infinite`,
+            animationDelay: `${star.delay}s`,
+            willChange: 'opacity'
+          }}
+        />
+      ))}
+
+      {/* Meteors */}
+      {activeMeteors.map(meteor => {
+        const angle = Math.atan2(meteor.distanceY, meteor.distanceX) * (180 / Math.PI);
+        return (
+          <div
+            key={meteor.id}
+            className="absolute top-0 left-0 pointer-events-none"
+            style={{
+              transform: `translate(${meteor.startX}vw, ${meteor.startY}vh) rotate(${angle}deg)`,
+              '--meteor-distance-x': `${meteor.distanceX}vw`,
+              '--meteor-distance-y': `${meteor.distanceY}vh`,
+              animation: `meteorDiagonal ${meteor.duration}s ease-out forwards`,
+              willChange: 'transform, opacity'
+            }}
+          >
+            {/* Tail */}
+            <div
+              className="absolute"
+              style={{
+                width: `${meteor.tailLength}px`,
+                height: `${meteor.width}px`,
+                background: meteor.isForeground ? CONFIG.colors.meteorBright : CONFIG.colors.meteorDim,
+                transform: 'translateY(-50%)',
+                left: `-${meteor.tailLength}px`,
+                top: '50%',
+                opacity: meteor.opacity,
+                filter: 'blur(0.5px)',
+                boxShadow: meteor.isForeground ? '0 0 8px rgba(255,255,255,0.6)' : '0 0 4px rgba(255,255,255,0.3)'
+              }}
+            />
+            {/* Head */}
+            <div
+              className="absolute rounded-full bg-white"
+              style={{
+                width: `${meteor.width * 1.5}px`,
+                height: `${meteor.width * 1.5}px`,
+                left: '0',
+                top: '50%',
+                transform: 'translateY(-50%)',
+                boxShadow: meteor.isForeground ? '0 0 10px 2px rgba(255,255,255,0.8)' : '0 0 6px 1px rgba(255,255,255,0.5)'
+              }}
+            />
+          </div>
+        );
+      })}
+    </div>
+  );
+}
+
+// --- New Components for Dashboard ---
+
+// 1. Interactive Dashboard Card
+const DashboardCard = ({ children, className = "", onClick, glowColor = "rgba(0,243,255,0.2)" }) => {
+  const [isClicked, setIsClicked] = useState(false);
+
+  const handleClick = (e) => {
+    setIsClicked(true);
+    setTimeout(() => setIsClicked(false), 400); // Reset after animation
+    if (onClick) onClick(e);
+  };
+
+  return (
+    <div
+      onClick={handleClick}
+      className={`
+        relative bg-white/5 border border-white/10 rounded-xl p-6 
+        transition-all duration-300 ease-out
+        hover:bg-white/10 hover:scale-[1.02] hover:shadow-[0_0_30px_${glowColor}]
+        cursor-pointer group
+        ${isClicked ? 'click-pop' : ''}
+        ${className}
+      `}
+    >
+      {children}
+    </div>
+  );
+};
+
+// 2. Dynamic Countdown Timer
+const CountdownTimer = ({ targetDate, lang }) => {
+  const [timeLeft, setTimeLeft] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 });
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      const now = new Date().getTime();
+      const distance = targetDate - now;
+
+      if (distance < 0) {
+        clearInterval(interval);
+        return;
+      }
+
+      setTimeLeft({
+        days: Math.floor(distance / (1000 * 60 * 60 * 24)),
+        hours: Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)),
+        minutes: Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60)),
+        seconds: Math.floor((distance % (1000 * 60)) / 1000)
+      });
+    }, 1000);
+
+    return () => clearInterval(interval);
+  }, [targetDate]);
+
+  return (
+    <div className="flex items-baseline gap-1">
+      <span className="text-6xl font-bold text-white tracking-tighter tabular-nums">{timeLeft.days}</span>
+      <span className="text-xl text-gray-500 font-medium mr-4">{lang === 'en' ? 'days' : '天'}</span>
+      <div className="flex items-baseline gap-1 text-2xl text-gray-400 font-mono">
+        <span className="tabular-nums">{String(timeLeft.hours).padStart(2, '0')}</span>:
+        <span className="tabular-nums">{String(timeLeft.minutes).padStart(2, '0')}</span>:
+        <span className="tabular-nums text-gray-500">{String(timeLeft.seconds).padStart(2, '0')}</span>
+      </div>
+    </div>
+  );
+};
+
+
+
+// 3. Smooth Line Chart
+const SmoothLineChart = ({ color = "#3b82f6", height = 100, dataPoints = 20, updateInterval = 1000 }) => {
+  const [data, setData] = useState(Array(dataPoints).fill(50));
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setData(prev => {
+        const next = [...prev.slice(1), Math.random() * 80 + 10]; // Random value between 10 and 90
+        return next;
+      });
+    }, updateInterval);
+    return () => clearInterval(interval);
+  }, [updateInterval, dataPoints]);
+
+  // Simple smoothing function to generate SVG path
+  const getPath = (data, width, height) => {
+    const points = data.map((val, i) => [
+      (i / (data.length - 1)) * width,
+      height - (val / 100) * height
+    ]);
+
+    if (points.length < 2) return "";
+
+    let d = `M ${points[0][0]},${points[0][1]}`;
+
+    for (let i = 0; i < points.length - 1; i++) {
+      const x_mid = (points[i][0] + points[i + 1][0]) / 2;
+      const y_mid = (points[i][1] + points[i + 1][1]) / 2;
+      const cp_x1 = (x_mid + points[i][0]) / 2;
+      const cp_x2 = (x_mid + points[i + 1][0]) / 2;
+      d += ` Q ${cp_x1},${points[i][1]} ${x_mid},${y_mid}`;
+      d += ` Q ${cp_x2},${points[i + 1][1]} ${points[i + 1][0]},${points[i + 1][1]}`;
+    }
+
+    return d;
+  };
+
+  const width = 300; // Arbitrary SVG width unit
+  const pathD = getPath(data, width, height);
+  const areaD = `${pathD} L ${width},${height} L 0,${height} Z`;
+
+  return (
+    <div className="w-full h-full relative overflow-hidden">
+      <svg className="w-full h-full" viewBox={`0 0 ${width} ${height}`} preserveAspectRatio="none">
+        <defs>
+          <linearGradient id={`gradient-${color}`} x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stopColor={color} stopOpacity="0.5" />
+            <stop offset="100%" stopColor={color} stopOpacity="0" />
+          </linearGradient>
+        </defs>
+        <path d={areaD} fill={`url(#gradient-${color})`} className="transition-all duration-500 ease-linear" />
+        <path d={pathD} fill="none" stroke={color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="transition-all duration-500 ease-linear drop-shadow-[0_0_8px_rgba(0,0,0,0.5)]" />
+      </svg>
+    </div>
+  );
+};
+
+// 4. Announcement Bar
+const AnnouncementBar = ({ lang }) => {
+  const [isExpanded, setIsExpanded] = useState(true);
+  const announcements = [
+    lang === 'en' ? '🚀 New server locations added in Tokyo and Singapore!' : '🚀 东京和新加坡新增服务器节点！',
+    lang === 'en' ? '🔒 Security protocol updated to v2.4 for better encryption.' : '🔒 安全协议已更新至 v2.4，加密更强。',
+    lang === 'en' ? '🎉 Holiday Sale: Get 50% off on annual plans!' : '🎉 假日特惠：年付套餐限时 5 折！'
+  ];
+
+  if (!isExpanded) {
+    return (
+      <button
+        onClick={() => setIsExpanded(true)}
+        className="h-full w-full px-4 py-3 rounded-xl bg-[#0a0f1e]/80 border border-white/10 hover:bg-white/10 text-xs text-blue-400 flex items-center justify-center gap-2 transition-all icon-btn"
+      >
+        <Bell size={16} className="animate-pulse" />
+        {lang === 'en' ? 'Show Announcements' : '显示公告'}
+      </button>
+    );
+  }
+
+  return (
+    <div className="h-full flex items-center rounded-xl border border-blue-500/20 bg-[#0a0f1e]/80 backdrop-blur-md group relative overflow-hidden">
+      <div className="absolute inset-0 bg-gradient-to-r from-blue-500/5 via-purple-500/5 to-blue-500/5" />
+
+      <div className="relative flex items-center justify-between w-full px-4 py-3">
+        <div className="flex items-center gap-3 flex-1 overflow-hidden">
+          <div className="shrink-0 w-8 h-8 rounded-lg bg-blue-500/20 flex items-center justify-center text-blue-400 icon-glow">
+            <Bell size={16} />
+          </div>
+          <div className="flex-1 overflow-hidden relative h-6">
+            <div className="absolute whitespace-nowrap animate-marquee flex gap-8 items-center text-sm text-gray-300">
+              {announcements.map((text, i) => (
+                <span key={i} className="flex items-center gap-2">
+                  <span className="w-1.5 h-1.5 rounded-full bg-blue-400 shadow-[0_0_5px_#60a5fa]" />
+                  {text}
+                </span>
+              ))}
+              {/* Duplicate for seamless loop */}
+              {announcements.map((text, i) => (
+                <span key={`dup-${i}`} className="flex items-center gap-2">
+                  <span className="w-1.5 h-1.5 rounded-full bg-blue-400 shadow-[0_0_5px_#60a5fa]" />
+                  {text}
+                </span>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        <button
+          onClick={() => setIsExpanded(false)}
+          className="shrink-0 ml-4 p-1.5 rounded-lg hover:bg-white/10 text-gray-400 hover:text-white transition-colors icon-btn"
+        >
+          <X size={16} />
+        </button>
+      </div>
+    </div>
+  );
+};
+
+// 3. 3D Upgrade Modal
+const UpgradeModal = ({ isOpen, onClose, lang }) => {
+  if (!isOpen) return null;
+
+  return (
+    <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 perspective-1000">
+      <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={onClose} />
+      <div
+        className="relative w-full max-w-lg bg-[#0a0f1e] border border-electric-blue/30 rounded-2xl p-8 shadow-[0_0_50px_rgba(0,243,255,0.2)]"
+        style={{
+          animation: 'modalPop 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) forwards',
+          transformStyle: 'preserve-3d',
+          transform: 'rotateX(10deg)'
+        }}
+      >
+        <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-electric-blue to-transparent" />
+
+        <h2 className="text-2xl font-bold text-white mb-4 flex items-center gap-2">
+          <Rocket size={28} className="text-electric-blue icon-glow" />
+          {lang === 'en' ? 'Upgrade to Pro' : '升级到专业版'}
+        </h2>
+
+        <div className="space-y-4 mb-8">
+          {[
+            { text: lang === 'en' ? 'Unlimited Bandwidth' : '无限带宽', icon: <Activity size={16} /> },
+            { text: lang === 'en' ? 'Access to 50+ Locations' : '访问全球 50+ 节点', icon: <Globe size={16} /> },
+            { text: lang === 'en' ? 'P2P Support' : '支持 P2P 下载', icon: <Download size={16} /> },
+            { text: lang === 'en' ? '24/7 Priority Support' : '24/7 优先支持', icon: <Headphones size={16} /> }
+          ].map((item, i) => (
+            <div key={i} className="flex items-center gap-3 text-gray-300">
+              <div className="w-5 h-5 rounded-full bg-green-500/20 flex items-center justify-center text-green-400">
+                <Check size={12} />
+              </div>
+              <div className="flex items-center gap-2">
+                {item.icon}
+                {item.text}
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <div className="flex gap-4">
+          <button
+            className="flex-1 py-3 bg-gradient-to-r from-electric-blue to-neon-purple text-white font-bold rounded-lg hover:scale-105 transition-transform shadow-[0_0_20px_rgba(0,243,255,0.4)] active-vibrate"
+            onClick={() => { alert('Redirecting to payment...'); onClose(); }}
+          >
+            {lang === 'en' ? 'Upgrade Now' : '立即升级'}
+          </button>
+          <button
+            className="px-6 py-3 border border-white/10 rounded-lg text-gray-400 hover:text-white hover:bg-white/5 transition-colors active-vibrate"
+            onClick={onClose}
+          >
+            {lang === 'en' ? 'Cancel' : '取消'}
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+function App() {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [isHovered, setIsHovered] = useState(false);
+  const [cardHovered, setCardHovered] = useState(false);
+  const [lang, setLang] = useState('en');
+  const [mousePosition, setMousePosition] = useState({ x: 0.5, y: 0.5 });
+  const [mobile, setMobile] = useState(isMobile());
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [loginError, setLoginError] = useState('');
+  const [currentUser, setCurrentUser] = useState(null);
+  const [animationTime, setAnimationTime] = useState(0);
+  const [showUpgradeModal, setShowUpgradeModal] = useState(false);
+  const [serverDetailMode, setServerDetailMode] = useState(false);
+
+  const t = translations[lang];
+
+  const testAccounts = [
+    { email: 'demo@argus.net', password: 'demo123', name: 'Demo User' },
+    { email: 'admin@argus.net', password: 'admin123', name: 'Admin User' }
+  ];
+
+  // Restore login state
+  useEffect(() => {
+    const savedLoginState = localStorage.getItem('vpn_login_state');
+    const savedUser = localStorage.getItem('vpn_current_user');
+    if (savedLoginState === 'true' && savedUser) {
+      try {
+        const user = JSON.parse(savedUser);
+        setIsLoggedIn(true);
+        setCurrentUser(user);
+      } catch (error) {
+        localStorage.removeItem('vpn_login_state');
+        localStorage.removeItem('vpn_current_user');
+      }
+    }
+  }, []);
+
+  // Animation loop
+  useEffect(() => {
+    let animationFrameId;
+    const animate = () => {
+      setAnimationTime(Date.now());
+      animationFrameId = requestAnimationFrame(animate);
+    };
+    animate();
+    return () => cancelAnimationFrame(animationFrameId);
+  }, []);
+
+  // Mouse tracking
+  useEffect(() => {
+    if (mobile) return;
+    const handleMouseMove = (e) => {
+      setMousePosition({
+        x: e.clientX / window.innerWidth,
+        y: e.clientY / window.innerHeight
+      });
+    };
+    window.addEventListener('mousemove', handleMouseMove);
+    return () => window.removeEventListener('mousemove', handleMouseMove);
+  }, [mobile]);
+
+  // Handle resize
+  useEffect(() => {
+    const handleResize = () => setMobile(isMobile());
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  const toggleLang = () => setLang(prev => prev === 'en' ? 'zh' : 'en');
+
+  const handleLogin = (e) => {
+    e.preventDefault();
+    setLoginError('');
+    const user = testAccounts.find(acc => acc.email === email && acc.password === password);
+    if (user) {
+      setIsLoggedIn(true);
+      setCurrentUser(user);
+      localStorage.setItem('vpn_login_state', 'true');
+      localStorage.setItem('vpn_current_user', JSON.stringify(user));
+    } else {
+      setLoginError(lang === 'en' ? 'Invalid email or password.' : '邮箱或密码错误。');
+    }
+  };
+
+  const handleLogout = () => {
+    setIsLoggedIn(false);
+    setCurrentUser(null);
+    setEmail('');
+    setPassword('');
+    localStorage.removeItem('vpn_login_state');
+    localStorage.removeItem('vpn_current_user');
+  };
+
+  const getTransform = () => {
+    if (mobile) return 'rotateX(0deg) rotateY(0deg)';
+    const panelConfig = CONFIG.panel.desktop;
+    const rotateX = panelConfig.baseRotateX + (mousePosition.y - 0.5) * panelConfig.mouseOffsetRange * 2;
+    const rotateY = panelConfig.baseRotateY + (mousePosition.x - 0.5) * panelConfig.mouseOffsetRange * 2;
+    return isHovered
+      ? `rotateX(${panelConfig.hoverRotateX}deg) rotateY(${panelConfig.hoverRotateY}deg) scale(${panelConfig.hoverScale})`
+      : `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+  };
+
+  return (
+    <div className="min-h-screen w-full relative overflow-hidden font-sans">
+      <BackgroundLayer />
+
+      {!isLoggedIn ? (
+        // LOGIN PAGE
+        <div className="relative z-10 min-h-screen w-full flex items-center justify-center perspective-2000 p-4 md:p-8">
+          <div
+            className={`
+              w-full md:w-[80%] max-w-[1200px]
+              ${mobile ? 'min-h-screen' : 'aspect-[16/9]'}
+              rounded-xl md:rounded-[24px]
+              transition-all duration-700 ease-out transform-style-3d relative
+              ${mobile ? '' : 'animate-float'}
+            `}
+            style={{
+              background: 'linear-gradient(135deg, rgba(2, 6, 23, 0.85) 0%, rgba(15, 23, 42, 0.75) 50%, rgba(30, 58, 138, 0.3) 100%)',
+              transform: getTransform(),
+              boxShadow: mobile ? '0 10px 40px -10px rgba(0,0,0,0.3)' : '40px 60px 120px -20px rgba(0,0,0,0.6), 0 0 60px -10px rgba(0,243,255,0.15)',
+              backdropFilter: 'blur(20px)',
+              border: '1px solid rgba(255,255,255,0.1)',
+              willChange: mobile ? 'auto' : 'transform'
+            }}
+            onMouseEnter={() => !mobile && setIsHovered(true)}
+            onMouseLeave={() => !mobile && setIsHovered(false)}
+          >
+            <div className="absolute inset-0 rounded-xl md:rounded-[24px] bg-gradient-to-br from-white/5 via-transparent to-transparent pointer-events-none" />
+            <div className="absolute top-[-20%] left-[-10%] w-[60%] h-[60%] bg-electric-blue/5 rounded-full blur-[100px] pointer-events-none" />
+
+            <div className="relative z-10 h-full flex flex-col">
+              {/* Top Nav */}
+              <div className="flex items-center justify-between px-6 md:px-10 py-6 border-b border-white/5 shrink-0">
+                <div className="flex items-center gap-3">
+                  <Shield className="w-6 h-6 text-white" />
+                  <span className="text-xl font-bold tracking-[0.15em] text-white/95">ARGUSVPN</span>
+                </div>
+                <div className="flex items-center gap-4">
+                  <button onClick={toggleLang} className="text-xs font-bold text-gray-400 hover:text-white uppercase tracking-wider">
+                    {lang === 'en' ? 'EN' : 'ZH'}
+                  </button>
+                  <button className="hidden md:block px-6 py-2.5 rounded-full bg-gray-100 text-slate-900 font-bold text-sm hover:scale-105 transition-transform active-vibrate shadow-lg hover:shadow-white/20">
+                    {t.installBtn}
+                  </button>
+                </div>
+              </div>
+
+              {/* Content */}
+              <div className="flex-grow grid grid-cols-1 md:grid-cols-12 gap-8 px-6 md:px-10 py-8 overflow-y-auto md:overflow-hidden">
+                <div className="hidden md:flex col-span-7 flex-col justify-between">
+                  <div className="space-y-6">
+                    <div className="text-6xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-white/30 to-transparent select-none leading-tight">
+                      SECURE<br />ACCESS
+                    </div>
+                    <div className="relative w-3 h-3">
+                      <div className="absolute inset-0 bg-green-500 rounded-full animate-ping opacity-75" />
+                      <div className="relative w-3 h-3 bg-green-500 rounded-full shadow-[0_0_10px_#22c55e]" />
+                    </div>
+                    <span className="text-sm font-bold text-transparent bg-clip-text bg-gradient-to-r from-green-400 to-emerald-300 tracking-wider">
+                      {lang === 'en' ? 'SYSTEM ONLINE' : '系统在线'}
+                    </span>
+                    <Activity size={16} className="text-green-400 animate-pulse" />
+                  </div>
+                  <div className="text-xs text-gray-500 font-mono space-y-1">
+                    <p>{t.systemId}</p>
+                    <p>{t.encryption}</p>
+                  </div>
+                </div>
+
+                <div className="col-span-1 md:col-span-5 flex items-center justify-center">
+                  <div
+                    className="w-full max-w-[420px] bg-[#0a0f1e]/70 backdrop-blur-xl border border-white/20 rounded-[20px] p-8 relative transition-all ease-out"
+                    style={{
+                      transform: cardHovered && !mobile
+                        ? `translateY(${CONFIG.card.hoverTranslateY}px) rotateX(${(mousePosition.y - 0.5) * CONFIG.card.hoverTiltRange}deg) rotateY(${(mousePosition.x - 0.5) * CONFIG.card.hoverTiltRange}deg)`
+                        : 'translateY(0px)',
+                      boxShadow: cardHovered ? '0 20px 60px -10px rgba(0,0,0,0.5), 0 0 40px -5px rgba(0,243,255,0.25)' : '0 10px 40px -10px rgba(0,0,0,0.4)',
+                      transitionDuration: `${CONFIG.card.transitionDuration}ms`
+                    }}
+                    onMouseEnter={() => !mobile && setCardHovered(true)}
+                    onMouseLeave={() => !mobile && setCardHovered(false)}
+                  >
+                    <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-electric-blue to-transparent opacity-60" />
+                    <div className="relative z-10">
+                      <h2 className="text-2xl font-bold text-white text-center mb-2">{t.signInTitle}</h2>
+                      <p className="text-gray-400 text-center text-sm mb-8">{t.signInSubtitle}</p>
+                      {loginError && <div className="mb-4 p-3 bg-red-500/10 border border-red-500/30 rounded-lg text-red-400 text-sm text-center">{loginError}</div>}
+                      <form className="space-y-6" onSubmit={handleLogin}>
+                        <div className="space-y-1.5">
+                          <label className="text-xs font-semibold text-gray-300 ml-1">{t.labelIdentity}</label>
+                          <input
+                            type="text"
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
+                            className="block w-full px-4 py-3 bg-[#020617]/80 border border-gray-700 rounded-lg focus:border-electric-blue text-white outline-none text-sm"
+                            placeholder={t.placeholderEmail}
+                          />
+                        </div>
+                        <div className="space-y-1.5">
+                          <label className="text-xs font-semibold text-gray-300 ml-1">{t.labelPassword}</label>
+                          <input
+                            type="password"
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
+                            className="block w-full px-4 py-3 bg-[#020617]/80 border border-gray-700 rounded-lg focus:border-electric-blue text-white outline-none text-sm"
+                            placeholder={t.placeholderPassword}
+                          />
+                        </div>
+                        <button type="submit" className="w-full py-3.5 bg-electric-blue hover:bg-[#33f6ff] text-slate-900 font-bold rounded-lg transition-all hover:scale-[1.02] active-vibrate shadow-[0_0_20px_rgba(0,243,255,0.3)]">
+                          {t.signInBtn}
+                        </button>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div className="shrink-0 pb-6 text-center">
+                <p className="text-[12px] text-gray-500/80 tracking-wide">{t.footerText}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      ) : (
+        // DASHBOARD PAGE
+        <div className="relative z-10 min-h-screen w-full flex bg-[#020617] perspective-2000 overflow-hidden">
+          {/* 3D Container for Sidebar */}
+          <div
+            className="hidden md:flex w-[260px] shrink-0 flex-col relative z-20"
+            style={{
+              transform: !mobile ? `
+        <div className="relative z-10 min-h-screen w-full flex bg-[#020617]">
+          {/* Sidebar - Fixed Width on Desktop, Hidden on Mobile */}
+          <div className="hidden md:flex w-[260px] shrink-0 flex-col border-r border-white/5 bg-[#050b1d]/80 backdrop-blur-xl">
+            {/* Logo */}
+            <div className="p-6 border-b border-white/5">
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-electric-blue to-neon-purple flex items-center justify-center shadow-lg shadow-electric-blue/20">
+                  <Shield className="w-6 h-6 text-white" />
+                </div>
+                <div>
+                  <div className="text-white font-bold text-lg tracking-tight">ArgusVPN</div>
+                  <div className="text-xs text-gray-500">Secure Network</div>
+                </div>
+              </div>
+            </div>
+
+            {/* User Profile */}
+            <div className="p-6 border-b border-white/5">
+              <div className="flex items-center gap-3 p-3 rounded-xl bg-white/5 hover:bg-white/10 transition-all cursor-pointer group">
+                <div className="relative">
+                  <div className="w-12 h-12 rounded-full bg-gradient-to-br from-blue-500 to-purple-500 flex items-center justify-center text-white font-bold text-lg shadow-lg">
+                    A
+                  </div>
+                  <div className="absolute bottom-0 right-0 w-3 h-3 bg-green-500 rounded-full border-2 border-[#050b1d] animate-pulse" />
+                </div>
+                <div className="flex-1 min-w-0">
+                  <div className="text-white font-semibold text-sm truncate">Agent Smith</div>
+                  <div className="flex items-center gap-1.5 mt-0.5">
+                    <span className="text-[10px] font-bold text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 to-orange-400">Lv.5 Premium</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Navigation */}
+            <nav className="space-y-2 p-6 flex-1 overflow-y-auto custom-scrollbar">
+              {[
+                { icon: '⚡', label: lang === 'en' ? 'Connect' : '连接', active: true, badge: null },
+                { icon: '🚀', label: lang === 'en' ? 'Speed' : '加速', active: false, badge: null },
+                { icon: '🛡️', label: lang === 'en' ? 'Security' : '安全', active: false, badge: null },
+                { icon: '🌍', label: lang === 'en' ? 'Servers' : '节点', active: false, badge: null },
+                { icon: '🔔', label: lang === 'en' ? 'Notifications' : '通知', active: false, badge: 3 },
+                { icon: '⚙️', label: lang === 'en' ? 'Settings' : '设置', active: false, badge: null },
+              ].map((item, index) => (
+                <a
+                  key={index}
+                  href="#"
+                  className={`
+                      flex items- center justify-between px-4 py-3.5 rounded-xl transition-all duration-300 group relative overflow-hidden
+          ${item.active
+            ? 'bg-blue-600 text-white shadow-[0_4px_20px_rgba(37,99,235,0.4)]'
+            : 'text-gray-400 hover:bg-white/5 hover:text-white'
+          }
+                    `}
+                >
+          {item.active && <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent animate-[shimmer_2s_infinite]" />}
+
+          <div className="flex items-center gap-3 relative z-10">
+            <span className={`text-xl transition-transform duration-300 ${item.active ? 'scale-110' : 'group-hover:scale-110 group-active:scale-95'}`}>{item.icon}</span>
+            <span className={`font-medium text-sm tracking-wide transition-colors ${item.active ? 'text-white' : 'group-hover:text-white'}`}>{item.label}</span>
+          </div>
+
+          {/* Notification Badge */}
+          {item.badge && (
+            <div className="relative z-10 min-w-[20px] h-5 px-1.5 bg-red-500 rounded-full flex items-center justify-center animate-pulse shadow-[0_0_10px_rgba(239,68,68,0.5)]">
+              <span className="text-[10px] font-bold text-white">{item.badge}</span>
+            </div>
+          )}
+
+          {/* Active Indicator Line */}
+          {item.active && (
+            <div className="absolute left-0 top-1/2 -translate-y-1/2 w-1 h-8 bg-white/50 rounded-r-full shadow-[0_0_10px_rgba(255,255,255,0.5)]" />
+          )}
+        </a>
+      ))}
+    </nav>
+
+            {/* Bottom Actions */ }
+  <div className="p-6 border-t border-white/5 space-y-3 bg-black/20">
+    <button onClick={toggleLang} className="w-full flex items-center justify-center gap-2 py-2.5 rounded-lg bg-white/5 hover:bg-white/10 text-xs text-gray-400 hover:text-white transition-all active-vibrate border border-white/5 hover:border-white/20">
+      <span className="uppercase tracking-widest">{lang === 'en' ? 'English' : '中文'}</span>
+    </button>
+    <button onClick={handleLogout} className="w-full flex items-center justify-center gap-2 py-2.5 rounded-lg bg-red-500/10 hover:bg-red-500/20 text-xs text-red-400 hover:text-red-300 transition-all active-vibrate border border-red-500/10 hover:border-red-500/30">
+      {lang === 'en' ? 'Sign Out' : '退出登录'}
+    </button>
+  </div>
+          </div >
+
+    {/* Main Content Area - Full width on mobile */ }
+    < div className = "flex-1 overflow-y-auto bg-[#020617] relative w-full" >
+      {/* 3D Parallax Container - Disabled on mobile */ }
+      < div
+  className = "min-h-screen transition-transform duration-200 ease-out md:transform-gpu"
+  style = {{
+    transform: !mobile ? `
+                rotateY(${(mousePosition.x - 0.5) * 2}deg)
+                rotateX(${-(mousePosition.y - 0.5) * 2}deg)
+                translateZ(0px)
+              ` : 'none',
+                      <div className="text-xs text-green-400 font-bold tracking-wider mb-1">STATUS</div>
+                      <div className="text-white font-bold text-lg">{lang === 'en' ? 'ONLINE' : '运行中'}</div>
+                    </div >
+      <div className="relative w-10 h-10 flex items-center justify-center icon-glow">
+        <div className="absolute inset-0 bg-green-500 rounded-full animate-ping opacity-20" />
+        <Activity size={24} className="text-green-400" />
+      </div>
+                  </div >
+                </div >
+
+      {/* Announcements */ }
+      < div className = "col-span-1 md:col-span-8 lg:col-span-9" >
+        <AnnouncementBar lang={lang} />
+                </div >
+              </div >
+
+      {/* 3. Data Grid (Bottom Layer) */ }
+      < div className = "grid grid-cols-1 md:grid-cols-12 gap-6" >
+
+        {/* 2. Traffic Chart (Small) - Spans 4 columns */ }
+        < div className = "col-span-1 md:col-span-6 lg:col-span-4" >
+          <DashboardCard className="h-full min-h-[320px] bg-[#0f172a]/80 border-white/10 flex flex-col shadow-lg">
+            <div className="flex items-center justify-between mb-4 shrink-0">
+              <h3 className="text-gray-200 font-bold tracking-wide">{lang === 'en' ? 'Traffic' : '流量监控'}</h3>
+              <span className="text-[10px] font-bold text-green-400 bg-green-500/10 px-2 py-1 rounded animate-pulse border border-green-500/20">LIVE</span>
+            </div>
+
+            <div className="flex-1 min-h-0 relative -mx-2">
+              <SmoothLineChart color="#3b82f6" height={150} dataPoints={15} updateInterval={800} />
+            </div>
+
+            <div className="mt-4 flex justify-between items-center shrink-0 p-3 bg-black/20 rounded-lg border border-white/5">
+              <div>
+                <div className="text-[10px] text-gray-400 uppercase tracking-wider mb-1">Download</div>
+                <div className="text-xl font-bold text-white">2.4 <span className="text-sm text-gray-400 font-normal">MB/s</span></div>
+              </div>
+              <div className="text-right">
+                <div className="text-[10px] text-gray-400 uppercase tracking-wider mb-1">Upload</div>
+                <div className="text-xl font-bold text-white">0.8 <span className="text-sm text-gray-400 font-normal">MB/s</span></div>
+              </div>
+            </div>
+          </DashboardCard>
+                </div >
+
+      {/* 3. Server Info (Medium) - Spans 4 columns */ }
+      < div className = "col-span-1 md:col-span-6 lg:col-span-4" >
+        <DashboardCard
+          className="h-[320px] bg-[#0f172a]/80 border-white/10 relative overflow-hidden shadow-lg"
+          onClick={() => setServerDetailMode(!serverDetailMode)}
+        >
+          <div className="absolute -right-10 -top-10 w-32 h-32 bg-purple-500/10 rounded-full blur-3xl" />
+
+          <div className="flex justify-between items-start mb-6">
+            <h3 className="text-gray-200 font-bold tracking-wide">{lang === 'en' ? 'Server' : '服务器'}</h3>
+            <span className="text-[10px] font-bold text-gray-400 bg-white/5 px-2 py-1 rounded-full border border-white/10 group-hover:bg-white/10 transition-colors">
+              {serverDetailMode ? (lang === 'en' ? 'DETAILS' : '详细') : (lang === 'en' ? 'OVERVIEW' : '概览')}
+            </span>
+          </div>
+
+          {!serverDetailMode ? (
+            <>
+              <div className="flex items-center gap-4 mb-8 animate-fadeIn">
+                <div className="w-14 h-14 rounded-2xl bg-white/5 flex items-center justify-center text-3xl shadow-inner border border-white/5 icon-glow">
+                  <Globe size={32} className="text-blue-400" />
+                </div>
+                <div>
+                  <div className="text-white font-bold text-xl tracking-tight">US-East-1</div>
+                  <div className="text-sm text-gray-400 font-medium">Virginia, USA</div>
+                </div>
+              </div>
+
+              <div className="grid grid-cols-2 gap-4 animate-fadeIn">
+                <div className="p-4 rounded-xl bg-black/20 border border-white/5 hover:border-white/10 transition-colors">
+                  <div className="text-[10px] text-gray-400 uppercase tracking-wider mb-1">Ping</div>
+                  <div className="text-green-400 font-mono font-bold text-lg flex items-center gap-2">
+                    <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
+                    24ms
+                  </div>
+                </div>
+                <div className="p-4 rounded-xl bg-black/20 border border-white/5 hover:border-white/10 transition-colors">
+                  <div className="text-[10px] text-gray-400 uppercase tracking-wider mb-1">Load</div>
+                  <div className="text-blue-400 font-mono font-bold text-lg">42%</div>
+                </div>
+              </div>
+            </>
+          ) : (
+            <div className="space-y-3 animate-fadeIn">
+              <div className="p-3 rounded-xl bg-black/20 border border-white/5 flex justify-between items-center">
+                <span className="text-xs text-gray-400 font-medium">IP Address</span>
+                <span className="text-xs font-mono text-white font-bold">192.168.1.101</span>
+              </div>
+              <div className="p-3 rounded-xl bg-black/20 border border-white/5 flex justify-between items-center">
+                <span className="text-xs text-gray-400 font-medium">Protocol</span>
+                <span className="text-xs font-mono text-purple-400 font-bold">WireGuard</span>
+              </div>
+              <div className="p-3 rounded-xl bg-black/20 border border-white/5 flex justify-between items-center">
+                <span className="text-xs text-gray-400 font-medium">Uptime</span>
+                <span className="text-xs font-mono text-green-400 font-bold">14d 2h 15m</span>
+              </div>
+            </div>
+          )}
+        </DashboardCard>
+                </div >
+
+      {/* 4. Connection Speed (Medium) - Spans 4 columns */ }
+      < div className = "col-span-1 md:col-span-12 lg:col-span-4" >
+        <DashboardCard className="h-[320px] bg-[#0f172a]/80 border-white/10 flex flex-col shadow-lg">
+          <h3 className="text-gray-200 font-bold tracking-wide mb-2 shrink-0">{lang === 'en' ? 'Speed' : '速度'}</h3>
+
+          {/* Dynamic Smooth Chart */}
+          <div className="flex-1 min-h-0 relative -mx-2">
+            <SmoothLineChart color="#00f3ff" height={120} dataPoints={25} updateInterval={200} />
+          </div>
+
+          <div className="flex justify-between items-end mt-2 shrink-0 p-4 bg-black/20 rounded-xl border border-white/5">
+            <div>
+              <div className="text-[10px] text-gray-400 uppercase tracking-wider mb-1">Real-time</div>
+              <div className="text-4xl font-bold text-white tracking-tighter">128 <span className="text-sm font-normal text-gray-400">Mbps</span></div>
+            </div>
+            <div className="w-10 h-10 rounded-full bg-cyan-500/10 flex items-center justify-center text-cyan-400 animate-pulse icon-glow">
+              <Zap size={24} />
+            </div>
+          </div>
+        </DashboardCard>
+                </div >
+
+      {/* 5. Quick Actions (Small) - Spans 4 columns */ }
+      < div className = "col-span-1 md:col-span-12 lg:col-span-4" >
+        <DashboardCard className="h-[240px] bg-[#0f172a]/50 border-white/5 flex flex-col justify-center gap-3">
+          <button className="w-full py-3 px-4 rounded-lg bg-white/5 hover:bg-white/10 text-left flex items-center gap-3 transition-colors group">
+            <span className="w-8 h-8 rounded-full bg-purple-500/20 flex items-center justify-center text-purple-400 group-hover:scale-110 transition-transform">⚡</span>
+            <div>
+              <div className="text-sm font-medium text-white">{lang === 'en' ? 'Smart Route' : '智能路由'}</div>
+              <div className="text-xs text-gray-500">{lang === 'en' ? 'Auto-select best path' : '自动选择最佳线路'}</div>
+            </div>
+          </button>
+          <button className="w-full py-3 px-4 rounded-lg bg-white/5 hover:bg-white/10 text-left flex items-center gap-3 transition-colors group">
+            <span className="w-8 h-8 rounded-full bg-orange-500/20 flex items-center justify-center text-orange-400 group-hover:scale-110 transition-transform">🛡️</span>
+            <div>
+              <div className="text-sm font-medium text-white">{lang === 'en' ? 'Kill Switch' : '安全阻断'}</div>
+              <div className="text-xs text-gray-500">{lang === 'en' ? 'Block traffic on drop' : '断线时阻断流量'}</div>
+            </div>
+          </button>
+        </DashboardCard>
+                </div >
+
+              </div >
+            </div >
+          </div >
+
+      {/* Upgrade Modal */ }
+      < UpgradeModal isOpen = { showUpgradeModal } onClose = {() => setShowUpgradeModal(false)
+  } lang = { lang } />
+        </div >
+      )
+}
+    </div >
+  );
+}
+
+export default App;
