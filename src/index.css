@@ -17,6 +17,18 @@
   }
 }
 
+/* Meteor Diagonal Animation */
+@keyframes meteorDiagonal {
+  from {
+    transform: translate(0, 0);
+    opacity: 1;
+  }
+  to {
+    transform: translate(var(--meteor-distance-x), var(--meteor-distance-y));
+    opacity: 0;
+  }
+}
+
 @layer utilities {
   .perspective-1000 {
     perspective: 1000px;

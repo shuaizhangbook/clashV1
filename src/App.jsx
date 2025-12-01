@@ -3,7 +3,9 @@ import {
   Activity, Shield, Zap, Globe, Clock, ChevronRight,
   Lock, Bell, X, Check, CreditCard, Download, Upload,
   LogOut, Settings, User, Menu, Search, LayoutDashboard,
-  Wifi, Smartphone, RefreshCw, ChevronDown, Languages, Headphones, Crown
+  Wifi, Smartphone, RefreshCw, ChevronDown, Languages, Headphones, Crown,
+  Wallet, Gift, ShoppingCart, BookOpen, FileText, LifeBuoy, HelpCircle,
+  Copy, Link2, ChevronUp, Sliders, ClipboardList, ScrollText, ShieldCheck
 } from 'lucide-react';
 import { CONFIG, getConfig, isMobile } from './config';
 
@@ -13,10 +15,6 @@ import { CONFIG, getConfig, isMobile } from './config';
 const translations = {
   en: {
     title: 'ArgusVPN',
-    dashboard: 'Dashboard',
-    connect: 'Connect',
-    servers: 'Servers',
-    settings: 'Settings',
     logout: 'Sign Out',
     status: 'Status',
     online: 'ONLINE',
@@ -27,7 +25,6 @@ const translations = {
     traffic: 'Traffic',
     devices: 'Devices',
     wallet: 'Wallet',
-    speed: 'Speed',
     welcome: 'Welcome back, Agent.',
     connected: 'CONNECTED',
     disconnected: 'DISCONNECTED',
@@ -37,10 +34,103 @@ const translations = {
     packetLoss: 'Packet Loss',
     account: 'Account',
     language: 'Language',
+    // Sidebar Navigation - New IA
+    navMain: 'MAIN',
+    navMy: 'MY',
+    navUsage: 'USAGE',
+    navSupport: 'SECURITY & SUPPORT',
+    dashboard: 'Dashboard',
+    store: 'Store / Plans',
+    connect: 'Connect',
+    speed: 'Connection Speed',
+    servers: 'Server List',
+    myAccount: 'My Account',
+    myWallet: 'My Wallet',
+    referral: 'Referral Program',
+    downloads: 'Downloads & Guides',
+    subscription: 'Subscription Import',
+    nodeSettings: 'Node Settings',
+    logs: 'Logs Center',
+    securityCenter: 'Security Center',
+    auditSystem: 'Audit System',
+    supportTickets: 'Support Tickets / Help Center',
+    notifications: 'Notifications',
+    settings: 'Settings',
+    // Alert Banner
+    planExpired: 'Plan Expired',
+    planExpiring: 'Plan Expiring Soon',
+    expiredBanner: 'Plan expired · Cannot connect to nodes · Renew now',
+    expiringBanner: 'expires in',
+    expiringDiscount: 'days · Renew early for 10% off',
+    renewNow: 'Renew Now',
+    viewDetails: 'View Details',
+    // Hero Card
+    annualMember: 'Annual Elite Member',
+    unlimitedAccess: 'Unlimited Access • Global Nodes',
+    daysRemaining: 'Days',
+    expired: 'EXPIRED',
+    cycleUsage: 'Cycle Usage (Reset: Jan 1)',
+    renewUpgrade: 'Renew / Upgrade',
+    // Row 2: Status Cards
+    statusCard: 'STATUS',
+    currentServer: 'Current Server',
+    notConnected: 'Not Connected',
+    lastSpeedTest: 'Last Speed Test',
+    announcementsCard: 'ANNOUNCEMENTS',
+    viewAllAnnouncements: 'View All Announcements',
+    securityRiskCard: 'SECURITY RISK',
+    dnsLeakProtection: 'DNS Leak Protection',
+    killSwitch: 'Kill Switch',
+    enabled: 'Enabled',
+    disabled: 'Disabled',
+    abnormalLogins: 'Abnormal Logins (24h)',
+    times: 'Times',
+    goToSecurityCenter: 'Go to Security Center',
+    // Row 3: Analytics
+    trafficUsage: 'Traffic Usage',
+    last7Days: 'Last 7 Days',
+    last30Days: 'Last 30 Days',
+    cycleUsed: 'Cycle Used',
+    estimatedDepletion: 'Est. Depleted',
+    changeServer: 'Change',
+    load: 'Load',
+    protocol: 'Protocol',
+    connectionLogs: 'Connection Logs',
+    viewAllLogs: 'View All Logs',
+    duration: 'Duration',
+    // Row 4: Guidance Layer
+    subscriptionImport: 'Subscription Import',
+    importDescription: 'One-click import subscription link based on your client',
+    oneClickImport: 'One-Click Import',
+    availableDomains: 'Available Access Domains',
+    viewAllDomains: 'View All Domains',
+    quickHelp: 'Quick Help',
+    faq1: 'Why can\'t I connect / slow speed?',
+    faq1Answer: 'Please check your network connection and try switching to a different server node. If the problem persists, contact support.',
+    faq2: 'How to import subscription on iOS / Mac?',
+    faq2Answer: 'Download the corresponding client (Shadowrocket/ClashX), then click the one-click import button above to automatically configure.',
+    faq3: 'Device limit reached, how to unbind?',
+    faq3Answer: 'Go to Account Settings > Online Devices, select the device you want to unbind and click Remove.',
+    viewFullGuide: 'View full guide in Help Center',
+    copied: 'Copied!',
+    copy: 'Copy',
+    // Help Center Page
+    helpCenterTitle: 'Help Center',
+    searchPlaceholder: 'Search for questions...',
+    categoryAll: 'All',
+    categoryGettingStarted: 'Getting Started',
+    categoryBilling: 'Plans & Billing',
+    categoryClients: 'Client Tutorials',
+    categoryTroubleshooting: 'Troubleshooting',
+    categoryOther: 'Other',
+    hotQuestion: 'Hot',
+    clientDownloads: 'Client Downloads',
+    backToDashboard: 'Back to Dashboard',
+    noResults: 'No results found',
     // Login Page Translations
     navWhy: 'Why Argus?',
     navPricing: 'Pricing',
-    navSupport: 'Support',
+    navSupportTop: 'Support',
     navDownload: 'Download',
     installBtn: 'Install ArgusVPN',
     signInTitle: 'Sign in to ArgusVPN',
@@ -59,10 +149,6 @@ const translations = {
   },
   zh: {
     title: 'ArgusVPN',
-    dashboard: '仪表板',
-    connect: '连接',
-    servers: '节点列表',
-    settings: '设置',
     logout: '退出登录',
     status: '状态',
     online: '运行中',
@@ -73,7 +159,6 @@ const translations = {
     traffic: '剩余流量',
     devices: '在线设备',
     wallet: '钱包余额',
-    speed: '连接速度',
     welcome: '欢迎回来，特工。',
     connected: '已连接',
     disconnected: '未连接',
@@ -83,10 +168,103 @@ const translations = {
     packetLoss: '丢包率',
     account: '账户设置',
     language: '语言切换',
+    // Sidebar Navigation - New IA
+    navMain: '主导航',
+    navMy: '我的',
+    navUsage: '使用',
+    navSupport: '安全与支持',
+    dashboard: '仪表板',
+    store: '商店 / 套餐中心',
+    connect: '连接',
+    speed: '连接速度',
+    servers: '节点列表',
+    myAccount: '我的账号',
+    myWallet: '我的钱包',
+    referral: '邀请返利',
+    downloads: '下载与教程',
+    subscription: '线路导入',
+    nodeSettings: '节点设置',
+    logs: '日志中心',
+    securityCenter: 'Security Center',
+    auditSystem: '审计系统',
+    supportTickets: '工单支持 / 帮助中心',
+    notifications: '通知',
+    settings: '设置',
+    // Alert Banner
+    planExpired: '套餐已过期',
+    planExpiring: '套餐即将到期',
+    expiredBanner: '套餐已过期 · 当前无法连接节点 · 立即续费',
+    expiringBanner: '距离套餐到期还有',
+    expiringDiscount: '天 · 提前续费享 9 折',
+    renewNow: '立即续费',
+    viewDetails: '查看详情',
+    // Hero Card
+    annualMember: '年度高级会员',
+    unlimitedAccess: '无限访问 • 全球节点',
+    daysRemaining: '天',
+    expired: '已过期',
+    cycleUsage: '周期使用量 (重置: 1月1日)',
+    renewUpgrade: '续费 / 升级',
+    // Row 2: Status Cards
+    statusCard: '状态',
+    currentServer: '当前服务器',
+    notConnected: '未连接',
+    lastSpeedTest: '上次测速',
+    announcementsCard: '公告',
+    viewAllAnnouncements: '查看全部公告',
+    securityRiskCard: '安全风险',
+    dnsLeakProtection: 'DNS 泄露保护',
+    killSwitch: 'Kill Switch',
+    enabled: '已开启',
+    disabled: '未开启',
+    abnormalLogins: '最近 24 小时异常登录',
+    times: '次',
+    goToSecurityCenter: '前往 Security Center',
+    // Row 3: Analytics
+    trafficUsage: '流量使用情况',
+    last7Days: '最近 7 天',
+    last30Days: '最近 30 天',
+    cycleUsed: '本周期已使用',
+    estimatedDepletion: '预计',
+    changeServer: '换线',
+    load: '负载',
+    protocol: '协议',
+    connectionLogs: '连接日志',
+    viewAllLogs: '查看全部连接日志',
+    duration: '时长',
+    // Row 4: Guidance Layer
+    subscriptionImport: '线路导入',
+    importDescription: '根据客户端一键导入订阅链接',
+    oneClickImport: '一键导入',
+    availableDomains: '可用访问域名',
+    viewAllDomains: '查看全部线路/域名',
+    quickHelp: '快速帮助',
+    faq1: '为什么连接不上 / 很慢？',
+    faq1Answer: '请检查网络连接并尝试切换不同的服务器节点。如问题持续，请联系客服。',
+    faq2: '如何在 iOS / Mac 导入订阅？',
+    faq2Answer: '下载对应客户端（Shadowrocket/ClashX），然后点击上方一键导入按钮即可自动配置。',
+    faq3: '设备上限满了怎么解绑？',
+    faq3Answer: '前往账户设置 > 在线设备，选择要解绑的设备点击移除即可。',
+    viewFullGuide: '在帮助中心查看完整说明',
+    copied: '已复制！',
+    copy: '复制',
+    // Help Center Page
+    helpCenterTitle: '帮助中心',
+    searchPlaceholder: '搜索问题关键字...',
+    categoryAll: '全部',
+    categoryGettingStarted: '新手入门',
+    categoryBilling: '套餐与计费',
+    categoryClients: '客户端教程',
+    categoryTroubleshooting: '故障排查',
+    categoryOther: '其他',
+    hotQuestion: '热门',
+    clientDownloads: '客户端下载',
+    backToDashboard: '返回仪表盘',
+    noResults: '未找到相关结果',
     // Login Page Translations
     navWhy: '关于 Argus?',
     navPricing: '价格方案',
-    navSupport: '技术支持',
+    navSupportTop: '技术支持',
     navDownload: '下载客户端',
     installBtn: '安装 ArgusVPN',
     signInTitle: '登录 ArgusVPN',
@@ -103,6 +281,56 @@ const translations = {
     systemId: '系统编号: 8X-2991',
     encryption: '加密协议: AES-256-GCM'
   }
+};
+
+// FAQ Data Structure
+const faqData = {
+  en: [
+    { id: 1, category: 'gettingStarted', hot: true, question: 'How do I get started with ArgusVPN?', answer: 'After logging in, click "Quick Connect" on the dashboard to automatically connect to the best server. You can also download our client apps and import your subscription link using the one-click import buttons.' },
+    { id: 2, category: 'gettingStarted', hot: true, question: 'How to import subscription on iOS/Mac?', answer: 'Download Shadowrocket (iOS) or ClashX (Mac) from the App Store. Then go to Dashboard > Subscription Import section and click the corresponding one-click import button. The subscription will be automatically configured.' },
+    { id: 3, category: 'gettingStarted', hot: false, question: 'What is the difference between protocols?', answer: 'ArgusVPN supports multiple protocols: WireGuard (fastest, recommended), Shadowsocks (stable), and V2Ray (bypass-friendly). WireGuard is recommended for most users due to its superior speed and security.' },
+
+    { id: 4, category: 'billing', hot: true, question: 'How do I renew my subscription?', answer: 'Go to Dashboard and click the "Renew / Upgrade" button on your plan card. You can also visit Store / Plans in the sidebar to view all available plans and renew your subscription.' },
+    { id: 5, category: 'billing', hot: false, question: 'What payment methods are supported?', answer: 'We support credit cards, PayPal, cryptocurrency (Bitcoin, USDT), and Alipay. All payments are processed securely through our payment partners.' },
+    { id: 6, category: 'billing', hot: false, question: 'How do I use coupons?', answer: 'Go to My Wallet page, enter your coupon code in the "Coupons" section, and click Apply. The discount will be automatically applied to your next purchase.' },
+    { id: 7, category: 'billing', hot: true, question: 'Can I get a refund?', answer: 'Yes! We offer a 30-day money-back guarantee for all new subscriptions. Contact support within 30 days of your purchase to request a full refund, no questions asked.' },
+
+    { id: 8, category: 'clients', hot: true, question: 'Which client should I download?', answer: 'For Windows/Linux: Clash for Windows or V2RayN. For Mac: ClashX or V2RayU. For iOS: Shadowrocket or Quantumult X. For Android: Clash for Android or V2RayNG. All download links are available in the Help Center.' },
+    { id: 9, category: 'clients', hot: false, question: 'How to configure Clash/ClashX?', answer: 'After installing the client, copy your subscription link from Dashboard > Subscription Import. In Clash, go to Profiles > Import > From URL, paste your link and download. The configuration will be automatically set up.' },
+    { id: 10, category: 'clients', hot: false, question: 'How many devices can I connect simultaneously?', answer: 'The number of simultaneous connections depends on your plan. Standard plans allow 3 devices, Premium plans allow 5 devices, and Ultimate plans allow 10 devices. You can check your limit in the Devices card on the dashboard.' },
+
+    { id: 11, category: 'troubleshooting', hot: true, question: 'Why can\'t I connect / experiencing slow speeds?', answer: 'First, check your internet connection. Then try: 1) Switching to a different server node, 2) Changing protocols (try WireGuard), 3) Restarting your client app, 4) Checking if your firewall is blocking the connection. If issues persist, contact support.' },
+    { id: 12, category: 'troubleshooting', hot: true, question: 'Device limit reached, how to unbind?', answer: 'Go to Account Settings > Online Devices. You\'ll see a list of all devices connected to your account. Click the "Remove" button next to any device you want to unbind. The slot will be immediately freed for a new device.' },
+    { id: 13, category: 'troubleshooting', hot: false, question: 'Connection keeps dropping?', answer: 'Enable "Kill Switch" in Security Center to maintain connection stability. Also ensure you\'re using the latest version of your client app. If using mobile data, the connection may drop when switching between WiFi and cellular.' },
+    { id: 14, category: 'troubleshooting', hot: false, question: 'How to check if DNS is leaking?', answer: 'Go to Security Center on your dashboard. The DNS Leak Protection status will show whether your DNS requests are protected. You can also visit dnsleaktest.com while connected to run a comprehensive test.' },
+
+    { id: 15, category: 'other', hot: false, question: 'Is my data safe and private?', answer: 'Yes! ArgusVPN uses military-grade AES-256-GCM encryption and maintains a strict no-logs policy. We don\'t track, collect, or store your browsing activity. Your privacy is our top priority.' },
+    { id: 16, category: 'other', hot: false, question: 'Can I use ArgusVPN in China?', answer: 'Yes, ArgusVPN is designed to work in restrictive networks. We recommend using V2Ray or Shadowsocks protocol with obfuscation enabled. Check our Status page for the most reliable servers for your region.' },
+    { id: 17, category: 'other', hot: false, question: 'How to contact support?', answer: 'You can reach our support team through: 1) Support Tickets page in the sidebar, 2) Live chat (available 24/7), 3) Email: support@argusvpn.com. We typically respond within 2-4 hours.' }
+  ],
+  zh: [
+    { id: 1, category: 'gettingStarted', hot: true, question: '如何开始使用 ArgusVPN？', answer: '登录后，点击仪表盘上的"快速连接"按钮即可自动连接到最佳服务器。您也可以下载客户端并使用一键导入按钮导入订阅链接。' },
+    { id: 2, category: 'gettingStarted', hot: true, question: '如何在 iOS/Mac 上导入订阅？', answer: '从 App Store 下载 Shadowrocket（iOS）或 ClashX（Mac）。然后前往仪表盘 > 线路导入部分，点击对应的一键导入按钮。订阅将自动配置完成。' },
+    { id: 3, category: 'gettingStarted', hot: false, question: '不同协议有什么区别？', answer: 'ArgusVPN 支持多种协议：WireGuard（最快，推荐）、Shadowsocks（稳定）和 V2Ray（抗封锁）。大多数用户推荐使用 WireGuard，因其速度和安全性更优。' },
+
+    { id: 4, category: 'billing', hot: true, question: '如何续费订阅？', answer: '前往仪表盘，点击套餐卡片上的"续费 / 升级"按钮。您也可以访问侧边栏的"商店 / 套餐中心"查看所有可用套餐并续费。' },
+    { id: 5, category: 'billing', hot: false, question: '支持哪些支付方式？', answer: '我们支持信用卡、PayPal、加密货币（比特币、USDT）和支付宝。所有支付均通过我们的支付合作伙伴安全处理。' },
+    { id: 6, category: 'billing', hot: false, question: '如何使用优惠券？', answer: '前往"我的钱包"页面，在"优惠券"部分输入优惠券代码并点击应用。折扣将自动应用于您的下次购买。' },
+    { id: 7, category: 'billing', hot: true, question: '可以退款吗？', answer: '可以！我们为所有新订阅提供 30 天无理由退款保证。在购买后 30 天内联系客服即可申请全额退款。' },
+
+    { id: 8, category: 'clients', hot: true, question: '应该下载哪个客户端？', answer: 'Windows/Linux：Clash for Windows 或 V2RayN。Mac：ClashX 或 V2RayU。iOS：Shadowrocket 或 Quantumult X。Android：Clash for Android 或 V2RayNG。所有下载链接都可在帮助中心找到。' },
+    { id: 9, category: 'clients', hot: false, question: '如何配置 Clash/ClashX？', answer: '安装客户端后，从仪表盘 > 线路导入复制您的订阅链接。在 Clash 中，前往配置文件 > 导入 > 从 URL 导入，粘贴链接并下载。配置将自动设置完成。' },
+    { id: 10, category: 'clients', hot: false, question: '可以同时连接多少设备？', answer: '同时连接数取决于您的套餐。标准套餐允许 3 台设备，高级套餐允许 5 台设备，旗舰套餐允许 10 台设备。您可以在仪表盘的设备卡片中查看您的限制。' },
+
+    { id: 11, category: 'troubleshooting', hot: true, question: '为什么连接不上 / 速度很慢？', answer: '首先检查您的网络连接。然后尝试：1）切换到不同的服务器节点，2）更换协议（尝试 WireGuard），3）重启客户端应用，4）检查防火墙是否阻止连接。如问题持续，请联系客服。' },
+    { id: 12, category: 'troubleshooting', hot: true, question: '设备上限满了怎么解绑？', answer: '前往账户设置 > 在线设备。您将看到连接到您账户的所有设备列表。点击要解绑设备旁边的"移除"按钮。该位置将立即释放供新设备使用。' },
+    { id: 13, category: 'troubleshooting', hot: false, question: '连接经常断开？', answer: '在 Security Center 启用"Kill Switch"以保持连接稳定性。同时确保您使用的是最新版本的客户端应用。如果使用移动数据，在 WiFi 和蜂窝网络切换时连接可能会断开。' },
+    { id: 14, category: 'troubleshooting', hot: false, question: '如何检查 DNS 是否泄露？', answer: '前往仪表盘上的 Security Center。DNS 泄露保护状态将显示您的 DNS 请求是否受保护。您也可以在连接时访问 dnsleaktest.com 进行全面测试。' },
+
+    { id: 15, category: 'other', hot: false, question: '我的数据安全和隐私有保障吗？', answer: '是的！ArgusVPN 使用军用级 AES-256-GCM 加密，并严格执行无日志政策。我们不跟踪、收集或存储您的浏览活动。您的隐私是我们的首要任务。' },
+    { id: 16, category: 'other', hot: false, question: '可以在中国使用 ArgusVPN 吗？', answer: '可以，ArgusVPN 专为受限网络设计。我们推荐使用启用混淆的 V2Ray 或 Shadowsocks 协议。查看我们的状态页面以了解您所在地区最可靠的服务器。' },
+    { id: 17, category: 'other', hot: false, question: '如何联系客服？', answer: '您可以通过以下方式联系我们的客服团队：1）侧边栏的工单支持页面，2）在线聊天（24/7 全天候），3）电子邮件：support@argusvpn.com。我们通常在 2-4 小时内回复。' }
+  ]
 };
 
 // --- Components ---
@@ -273,10 +501,10 @@ const DashboardCard = ({ children, className = "", onClick, noHover = false }) =
     onClick={onClick}
     className={`
       relative overflow-hidden
-      bg-[#050B1C]/90 backdrop-blur-xl border border-white/5 rounded-[20px] p-6
+      bg-[#0f172a]/90 backdrop-blur-xl border border-white/5 rounded-[20px] p-6
       shadow-[0_4px_20px_rgba(0,0,0,0.2)]
       transition-all duration-300 ease-out
-      ${!noHover ? 'hover:-translate-y-0.5 hover:shadow-[0_10px_30px_rgba(0,0,0,0.4)] hover:border-white/10' : ''}
+      ${!noHover ? 'hover:-translate-y-[2px] hover:shadow-[0_10px_30px_rgba(0,0,0,0.4)] hover:border-white/10' : ''}
       ${onClick ? 'cursor-pointer active:scale-[0.99]' : ''}
       ${className}
     `}
@@ -438,6 +666,13 @@ function App() {
   // Notification Broadcast State
   const [currentNotification, setCurrentNotification] = useState(0);
   const [isNotificationExpanded, setIsNotificationExpanded] = useState(false);
+  const [alertBannerDismissed, setAlertBannerDismissed] = useState(false);
+  const [expandedFAQ, setExpandedFAQ] = useState(null);
+  const [copiedItem, setCopiedItem] = useState(null);
+  const [currentPage, setCurrentPage] = useState('dashboard'); // 'dashboard' or 'help'
+  const [selectedCategory, setSelectedCategory] = useState('all');
+  const [selectedQuestion, setSelectedQuestion] = useState(null);
+  const [searchQuery, setSearchQuery] = useState('');
 
 
   const t = translations[lang];
@@ -689,44 +924,141 @@ function App() {
       <aside className={`
         fixed inset-y-0 left-0 z-50 w-64 bg-[#0f172a]/90 backdrop-blur-xl border-r border-white/5 transition-transform duration-300
         ${mobile && !sidebarOpen ? '-translate-x-full' : 'translate-x-0'}
-        ${!mobile ? 'relative' : ''}
+        ${!mobile ? 'relative h-screen' : ''}
       `}>
-        <div className="h-full flex flex-col">
+        <div className="h-full flex flex-col overflow-hidden">
           {/* Logo */}
-          <div className="h-20 flex items-center px-6 border-b border-white/5">
+          <div className="h-20 flex items-center px-6 border-b border-white/5 shrink-0">
             <Shield className="text-blue-500 mr-3 animate-pulse" size={28} />
             <span className="text-xl font-bold text-white tracking-wider">ArgusVPN</span>
           </div>
 
           {/* Nav */}
-          <nav className="flex-1 p-4 space-y-2">
-            {[
-              { icon: LayoutDashboard, label: t.dashboard, active: true },
-              { icon: Zap, label: t.connect },
-              { icon: Activity, label: t.speed },
-              { icon: Shield, label: 'Security' },
-              { icon: Globe, label: t.servers },
-              { icon: Bell, label: 'Notifications' },
-              { icon: Settings, label: t.settings },
-            ].map((item, i) => (
-              <a
-                key={i}
-                href="#"
-                className={`
-                  flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-all
-                  ${item.active
-                    ? 'bg-blue-500/10 text-blue-400 border border-blue-500/20 shadow-[0_0_15px_rgba(59,130,246,0.1)]'
-                    : 'text-gray-400 hover:text-white hover:bg-white/5'}
-                `}
-              >
-                <item.icon size={18} />
-                {item.label}
-              </a>
-            ))}
+          <nav className="flex-1 p-4 space-y-1 overflow-y-auto min-h-0">
+            {/* 主导航 */}
+            <div className="mb-4">
+              <div className="px-3 mb-3 text-xs text-white/40 tracking-wide">
+                {t.navMain}
+              </div>
+              {[
+                { icon: LayoutDashboard, label: t.dashboard, active: currentPage === 'dashboard', onClick: () => setCurrentPage('dashboard') },
+                { icon: ShoppingCart, label: t.store, highlight: true },
+                { icon: Zap, label: t.connect },
+                { icon: Activity, label: t.speed },
+                { icon: Globe, label: t.servers },
+              ].map((item, i) => (
+                <a
+                  key={i}
+                  href="#"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    if (item.onClick) item.onClick();
+                  }}
+                  className={`
+                    flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-all relative
+                    ${item.active
+                      ? 'bg-blue-500/10 text-blue-400 border border-blue-500/20 shadow-[0_0_15px_rgba(59,130,246,0.1)]'
+                      : item.highlight
+                        ? 'text-amber-400 hover:text-amber-300 hover:bg-amber-500/5'
+                        : 'text-gray-400 hover:text-white hover:bg-white/5'}
+                  `}
+                >
+                  <item.icon size={18} className={item.highlight ? 'text-amber-400' : ''} />
+                  <span className="flex-1">{item.label}</span>
+                  {item.highlight && (
+                    <div className="w-1 h-1 rounded-full bg-gradient-to-r from-amber-400 to-orange-400 animate-pulse" />
+                  )}
+                </a>
+              ))}
+            </div>
+
+            {/* 我的 */}
+            <div className="mt-6 mb-4">
+              <div className="px-3 mb-3 text-xs text-white/40 tracking-wide">
+                {t.navMy}
+              </div>
+              {[
+                { icon: User, label: t.myAccount },
+                { icon: Wallet, label: t.myWallet },
+                { icon: Gift, label: t.referral },
+              ].map((item, i) => (
+                <a
+                  key={i}
+                  href="#"
+                  className="flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium text-gray-400 hover:text-white hover:bg-white/5 transition-all"
+                >
+                  <item.icon size={18} />
+                  <span className="flex-1">{item.label}</span>
+                </a>
+              ))}
+            </div>
+
+            {/* 使用 */}
+            <div className="mt-6 mb-4">
+              <div className="px-3 mb-3 text-xs text-white/40 tracking-wide">
+                {t.navUsage}
+              </div>
+              {[
+                { icon: Download, label: t.downloads, onClick: () => setCurrentPage('help') },
+                { icon: FileText, label: t.subscription },
+                { icon: Settings, label: t.nodeSettings },
+                { icon: ScrollText, label: t.logs },
+              ].map((item, i) => (
+                <a
+                  key={i}
+                  href="#"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    if (item.onClick) item.onClick();
+                  }}
+                  className="flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium text-gray-400 hover:text-white hover:bg-white/5 transition-all"
+                >
+                  <item.icon size={18} />
+                  <span className="flex-1">{item.label}</span>
+                </a>
+              ))}
+            </div>
+
+            {/* 安全与支持 */}
+            <div className="mt-6 mb-4">
+              <div className="px-3 mb-3 text-xs text-white/40 tracking-wide">
+                {t.navSupport}
+              </div>
+              {[
+                { icon: Shield, label: t.securityCenter },
+                { icon: ShieldCheck, label: t.auditSystem },
+                { icon: LifeBuoy, label: t.supportTickets, isNew: true },
+                { icon: Bell, label: t.notifications, badgeCount: 3 },
+                { icon: Settings, label: t.settings },
+              ].map((item, i) => (
+                <a
+                  key={i}
+                  href="#"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    if (item.onClick) item.onClick();
+                  }}
+                  className="flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium text-gray-400 hover:text-white hover:bg-white/5 transition-all relative"
+                >
+                  <item.icon size={18} />
+                  <span className="flex-1">{item.label}</span>
+                  {item.isNew && (
+                    <span className="px-1.5 py-0.5 text-[10px] font-bold text-emerald-400 bg-emerald-500/10 border border-emerald-500/20 rounded">
+                      NEW
+                    </span>
+                  )}
+                  {item.badgeCount && item.badgeCount > 0 && (
+                    <span className="min-w-[18px] h-[18px] flex items-center justify-center px-1 text-[10px] font-bold text-white bg-red-500 rounded-full">
+                      {item.badgeCount}
+                    </span>
+                  )}
+                </a>
+              ))}
+            </div>
           </nav>
 
           {/* Footer Actions - Simplified */}
-          <div className="p-4 border-t border-white/5">
+          <div className="p-4 border-t border-white/5 shrink-0">
             <div className="text-xs text-gray-500 text-center">
               v2.4.0-stable
             </div>
@@ -802,7 +1134,260 @@ function App() {
 
         {/* Main Content Area - Full Width & Centered */}
         <main className="flex-1 relative overflow-y-auto overflow-x-hidden bg-[#020617] text-slate-200">
-          <div className="max-w-[1440px] mx-auto w-full p-6 lg:p-8 space-y-6">
+          {currentPage === 'help' ? (
+            <div className="max-w-[1400px] mx-auto w-full p-6 lg:p-8">
+              {/* Header */}
+              <div className="mb-8">
+                <button
+                  onClick={() => setCurrentPage('dashboard')}
+                  className="flex items-center gap-2 text-sm text-gray-400 hover:text-white transition-colors mb-4"
+                >
+                  <ChevronRight size={16} className="rotate-180" />
+                  {t.backToDashboard}
+                </button>
+                <h1 className="text-3xl font-bold text-white mb-4">{t.helpCenterTitle}</h1>
+
+                {/* Search Bar */}
+                <div className="relative max-w-2xl">
+                  <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" size={20} />
+                  <input
+                    type="text"
+                    placeholder={t.searchPlaceholder}
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                    className="w-full pl-12 pr-4 py-3 bg-[#0f172a]/80 border border-white/10 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:border-blue-500/50 transition-colors"
+                  />
+                </div>
+              </div>
+
+              {/* Category Tabs */}
+              <div className="flex flex-wrap gap-2 mb-6">
+                {[
+                  { key: 'all', label: t.categoryAll },
+                  { key: 'gettingStarted', label: t.categoryGettingStarted },
+                  { key: 'billing', label: t.categoryBilling },
+                  { key: 'clients', label: t.categoryClients },
+                  { key: 'troubleshooting', label: t.categoryTroubleshooting },
+                  { key: 'other', label: t.categoryOther }
+                ].map(cat => (
+                  <button
+                    key={cat.key}
+                    onClick={() => setSelectedCategory(cat.key)}
+                    className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${
+                      selectedCategory === cat.key
+                        ? 'bg-gradient-to-r from-blue-600 to-purple-600 text-white shadow-lg shadow-blue-500/30'
+                        : 'bg-white/5 text-gray-400 hover:text-white hover:bg-white/10'
+                    }`}
+                  >
+                    {cat.label}
+                  </button>
+                ))}
+              </div>
+
+              {/* 3-Column Layout */}
+              <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
+                {/* Left: Question List */}
+                <div className="lg:col-span-3 space-y-2">
+                  {(() => {
+                    const faqs = faqData[lang] || faqData.en;
+                    const filtered = faqs.filter(faq => {
+                      const matchesCategory = selectedCategory === 'all' || faq.category === selectedCategory;
+                      const matchesSearch = !searchQuery || faq.question.toLowerCase().includes(searchQuery.toLowerCase()) || faq.answer.toLowerCase().includes(searchQuery.toLowerCase());
+                      return matchesCategory && matchesSearch;
+                    });
+
+                    if (filtered.length === 0) {
+                      return (
+                        <div className="text-center py-8 text-gray-500">
+                          {t.noResults}
+                        </div>
+                      );
+                    }
+
+                    return filtered.map(faq => (
+                      <button
+                        key={faq.id}
+                        onClick={() => setSelectedQuestion(faq.id)}
+                        className={`w-full text-left p-3 rounded-lg transition-all ${
+                          selectedQuestion === faq.id
+                            ? 'bg-blue-500/10 border border-blue-500/30 text-white'
+                            : 'bg-white/5 border border-transparent text-gray-300 hover:bg-white/10 hover:text-white'
+                        }`}
+                      >
+                        <div className="flex items-start gap-2">
+                          {faq.hot && (
+                            <span className="px-2 py-0.5 bg-orange-500/20 text-orange-400 text-[10px] font-bold rounded">
+                              {t.hotQuestion}
+                            </span>
+                          )}
+                        </div>
+                        <div className="text-sm font-medium mt-1">{faq.question}</div>
+                      </button>
+                    ));
+                  })()}
+                </div>
+
+                {/* Middle: Answer Detail */}
+                <div className="lg:col-span-6">
+                  <DashboardCard>
+                    {(() => {
+                      const faqs = faqData[lang] || faqData.en;
+                      const selected = faqs.find(f => f.id === selectedQuestion) || faqs[0];
+
+                      return (
+                        <div>
+                          <div className="flex items-start gap-3 mb-4">
+                            {selected.hot && (
+                              <span className="px-3 py-1 bg-orange-500/20 text-orange-400 text-xs font-bold rounded-lg">
+                                {t.hotQuestion}
+                              </span>
+                            )}
+                          </div>
+                          <h2 className="text-2xl font-bold text-white mb-4">{selected.question}</h2>
+                          <div className="prose prose-invert max-w-none">
+                            <p className="text-gray-300 leading-relaxed whitespace-pre-line">{selected.answer}</p>
+                          </div>
+                        </div>
+                      );
+                    })()}
+                  </DashboardCard>
+                </div>
+
+                {/* Right: Client Downloads + Subscription Import */}
+                <div className="lg:col-span-3 space-y-6">
+                  {/* Client Downloads */}
+                  <DashboardCard>
+                    <div className="flex items-center gap-2 mb-4">
+                      <Download size={18} className="text-purple-400" />
+                      <h3 className="font-bold text-white text-sm">{t.clientDownloads}</h3>
+                    </div>
+                    <div className="space-y-2">
+                      {[
+                        { name: 'Clash / ClashX', icon: '⚡' },
+                        { name: 'Shadowrocket', icon: '🚀' },
+                        { name: 'Quantumult X', icon: '🔷' },
+                        { name: 'V2Ray', icon: '📡' }
+                      ].map((client, i) => (
+                        <button
+                          key={i}
+                          onClick={() => {
+                            setCopiedItem(`help-client-${i}`);
+                            setTimeout(() => setCopiedItem(null), 2000);
+                          }}
+                          className="w-full flex items-center justify-between p-3 rounded-lg bg-gradient-to-br from-purple-500/10 to-blue-500/10 border border-purple-500/20 hover:border-purple-400/40 transition-all hover:scale-[1.02] group"
+                        >
+                          <div className="flex items-center gap-2">
+                            <span className="text-lg">{client.icon}</span>
+                            <div className="text-left">
+                              <div className="text-sm font-bold text-white group-hover:text-purple-300 transition-colors">
+                                {client.name}
+                              </div>
+                              <div className="text-xs text-gray-500">
+                                {copiedItem === `help-client-${i}` ? t.copied : t.oneClickImport}
+                              </div>
+                            </div>
+                          </div>
+                          <Download size={14} className="text-purple-400 group-hover:text-purple-300 transition-colors" />
+                        </button>
+                      ))}
+                    </div>
+                  </DashboardCard>
+
+                  {/* Subscription Import */}
+                  <DashboardCard>
+                    <div className="flex items-center gap-2 mb-4">
+                      <FileText size={18} className="text-blue-400" />
+                      <h3 className="font-bold text-white text-sm">{t.subscriptionImport}</h3>
+                    </div>
+                    <p className="text-xs text-gray-400 mb-4">{t.importDescription}</p>
+                    <div className="grid grid-cols-1 gap-2">
+                      {[
+                        { name: 'Clash / ClashX', icon: '⚡' },
+                        { name: 'Shadowrocket', icon: '🚀' },
+                        { name: 'Quantumult X', icon: '🔷' },
+                        { name: 'V2Ray / ' + (lang === 'en' ? 'General' : '通用'), icon: '📡' }
+                      ].map((client, i) => (
+                        <button
+                          key={i}
+                          onClick={() => {
+                            setCopiedItem(`help-import-${i}`);
+                            setTimeout(() => setCopiedItem(null), 2000);
+                          }}
+                          className="w-full flex items-center justify-between p-3 rounded-lg bg-gradient-to-br from-blue-500/10 to-cyan-500/10 border border-blue-500/20 hover:border-blue-400/40 transition-all hover:scale-[1.02] group"
+                        >
+                          <div className="flex items-center gap-2">
+                            <span className="text-lg">{client.icon}</span>
+                            <div className="text-left">
+                              <div className="text-sm font-bold text-white group-hover:text-blue-300 transition-colors">
+                                {client.name}
+                              </div>
+                              <div className="text-xs text-gray-500">
+                                {copiedItem === `help-import-${i}` ? t.copied : t.oneClickImport}
+                              </div>
+                            </div>
+                          </div>
+                          <Copy size={14} className="text-blue-400 group-hover:text-blue-300 transition-colors" />
+                        </button>
+                      ))}
+                    </div>
+                  </DashboardCard>
+                </div>
+              </div>
+            </div>
+          ) : (
+            <div className="max-w-[1440px] mx-auto w-full p-6 lg:p-8 space-y-6">
+
+            {/* ALERT BANNER: Plan Status */}
+            {(() => {
+              const expiryDate = new Date('2025-01-03T23:59:59');
+              const now = new Date();
+              const daysLeft = Math.ceil((expiryDate - now) / (1000 * 60 * 60 * 24));
+              const isExpired = daysLeft <= 0;
+              const isExpiring = daysLeft > 0 && daysLeft <= 7;
+
+              if (alertBannerDismissed || (!isExpired && !isExpiring)) return null;
+
+              return (
+                <div className={`
+                  relative w-full rounded-xl p-4 flex items-center justify-between gap-4
+                  ${isExpired
+                    ? 'bg-gradient-to-r from-red-600/90 via-red-500/90 to-red-600/90 border border-red-400/30'
+                    : 'bg-gradient-to-r from-orange-600/90 via-amber-500/90 to-orange-600/90 border border-orange-400/30'}
+                  shadow-lg backdrop-blur-sm animate-fadeIn
+                `}>
+                  {/* Left: Icon + Message */}
+                  <div className="flex items-center gap-3 flex-1">
+                    {isExpired ? (
+                      <div className="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center animate-pulse">
+                        <X size={24} className="text-white" />
+                      </div>
+                    ) : (
+                      <div className="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center">
+                        <Clock size={24} className="text-white" />
+                      </div>
+                    )}
+                    <div className="flex-1">
+                      <div className="text-white font-bold text-sm md:text-base">
+                        {isExpired ? t.expiredBanner : `${t.expiringBanner} ${daysLeft} ${t.expiringDiscount}`}
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Right: Action Button + Close */}
+                  <div className="flex items-center gap-3">
+                    <button className="px-4 py-2 bg-white text-slate-900 font-bold text-sm rounded-lg hover:bg-gray-100 transition-all hover:scale-105 shadow-lg">
+                      {t.renewNow}
+                    </button>
+                    <button
+                      onClick={() => setAlertBannerDismissed(true)}
+                      className="w-8 h-8 rounded-lg bg-white/10 hover:bg-white/20 flex items-center justify-center text-white transition-all"
+                    >
+                      <X size={18} />
+                    </button>
+                  </div>
+                </div>
+              );
+            })()}
 
             {/* ROW 1: Hero Card + Metrics */}
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
@@ -823,7 +1408,7 @@ function App() {
                     badge: 'bg-red-500/20 text-red-400 border-red-500/30',
                     text: 'text-red-400',
                     glow: 'shadow-[0_0_20px_rgba(239,68,68,0.3)]',
-                    buttonClass: 'bg-gradient-to-r from-red-600 to-red-500 hover:from-red-500 hover:to-red-400 animate-pulse shadow-lg shadow-red-600/30'
+                    buttonClass: 'bg-gradient-to-r from-red-600 to-red-500 hover:from-red-500 hover:to-red-400 animate-pulse shadow-lg shadow-red-600/30 hover:shadow-[0_0_30px_rgba(239,68,68,0.5)]'
                   }
                   : isExpiring
                     ? {
@@ -831,14 +1416,14 @@ function App() {
                       badge: 'bg-orange-500/20 text-orange-400 border-orange-500/30',
                       text: 'text-orange-400',
                       glow: 'shadow-[0_0_15px_rgba(251,146,60,0.2)]',
-                      buttonClass: 'bg-gradient-to-r from-orange-600 to-amber-500 hover:from-orange-500 hover:to-amber-400 shadow-lg shadow-orange-600/20'
+                      buttonClass: 'bg-gradient-to-r from-orange-600 to-amber-500 hover:from-orange-500 hover:to-amber-400 shadow-lg shadow-orange-600/20 hover:shadow-[0_0_30px_rgba(251,146,60,0.4)]'
                     }
                     : {
                       topBar: 'bg-gradient-to-r from-blue-500 via-cyan-500 to-blue-500',
                       badge: 'bg-blue-500/20 text-blue-400 border-blue-500/30',
                       text: 'text-blue-400',
                       glow: 'shadow-[0_0_15px_rgba(59,130,246,0.15)]',
-                      buttonClass: 'bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 shadow-lg shadow-blue-600/20'
+                      buttonClass: 'bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 shadow-lg shadow-blue-600/20 hover:shadow-[0_0_30px_rgba(59,130,246,0.4)]'
                     };
 
                 // Countdown calculation
@@ -854,23 +1439,17 @@ function App() {
                     {/* Status Bar */}
                     <div className={`absolute top-0 left-0 w-full h-1.5 ${statusConfig.topBar}`} />
 
-                    {/* Expired Banner */}
-                    {isExpired && (
-                      <div className="absolute top-0 left-0 right-0 bg-red-600/90 backdrop-blur-sm py-2 px-4 flex items-center justify-center gap-2 text-white text-sm font-bold animate-pulse">
-                        <X size={16} />
-                        {lang === 'en' ? 'PLAN EXPIRED - RENEW NOW' : '套餐已过期 - 立即续费'}
-                      </div>
-                    )}
+                    {/* Expired Banner - Removed, now using global alert banner */}
 
-                    <div className={`flex justify-between items-start ${isExpired ? 'mt-10' : ''}`}>
+                    <div className={`flex justify-between items-start`}>
                       {/* Left: Plan Info */}
                       <div className="flex-1">
                         <div className="flex items-center gap-2 mb-3">
                           <span className={`px-2.5 py-1 rounded-lg text-xs font-bold ${statusConfig.badge}`}>
-                            {isExpired ? (lang === 'en' ? 'EXPIRED' : '已过期') : 'PREMIUM'}
+                            {isExpired ? t.expired : 'PREMIUM'}
                           </span>
                           <span className="text-xs text-gray-400">
-                            {lang === 'en' ? 'Annual Elite Member' : '年度高级会员'} ·
+                            {t.annualMember} ·
                             <span className="text-emerald-400 ml-1">Lv.5 Elite (75%)</span>
                           </span>
                         </div>
@@ -878,15 +1457,15 @@ function App() {
                           {lang === 'en' ? 'Premium Plan' : '高级计划'}
                         </h3>
                         <p className="text-sm text-gray-400">
-                          {lang === 'en' ? 'Unlimited Access • Global Nodes' : '无限访问 • 全球节点'}
+                          {t.unlimitedAccess}
                         </p>
 
                         {/* Countdown Timer */}
                         <div className="mt-6">
                           <div className={`text-5xl font-bold tabular-nums tracking-tight ${isExpired ? 'text-red-400' : statusConfig.text}`}>
                             {isExpired
-                              ? (lang === 'en' ? 'EXPIRED' : '已过期')
-                              : `${timeLeft.days} ${lang === 'en' ? 'Days' : '天'}`
+                              ? t.expired
+                              : `${timeLeft.days} ${t.daysRemaining}`
                             }
                           </div>
                           {!isExpired && (
@@ -912,7 +1491,7 @@ function App() {
                     <div className="mt-6">
                       <div className="flex justify-between text-xs mb-2">
                         <span className="text-gray-400">
-                          {lang === 'en' ? 'Cycle Usage (Reset: Jan 1)' : '周期使用量 (重置: 1月1日)'}
+                          {t.cycleUsage}
                         </span>
                         <span className="text-white font-bold">75%</span>
                       </div>
@@ -921,15 +1500,18 @@ function App() {
                       </div>
                     </div>
 
-                    {/* Action Button */}
+                    {/* Action Buttons */}
                     <div className="mt-6 flex gap-3">
                       <button className={`flex-1 py-3 rounded-xl text-white font-bold text-sm transition-all hover:scale-[1.02] ${statusConfig.buttonClass}`}>
                         {isExpired
                           ? (lang === 'en' ? '🔥 RENEW NOW' : '🔥 立即续费')
                           : isExpiring
-                            ? (lang === 'en' ? '⚡ Renew / Upgrade' : '⚡ 续费 / 升级')
-                            : (lang === 'en' ? 'Renew / Upgrade' : '续费 / 升级')
+                            ? t.renewUpgrade
+                            : t.renewUpgrade
                         }
+                      </button>
+                      <button className="px-6 py-3 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-gray-300 hover:text-white font-bold text-sm transition-all hover:scale-[1.02]">
+                        {t.viewDetails}
                       </button>
                     </div>
                   </DashboardCard>
@@ -960,10 +1542,10 @@ function App() {
                     {
                       label: lang === 'en' ? 'Membership' : '会员时长',
                       value: isExpired
-                        ? (lang === 'en' ? 'Expired' : '已过期')
-                        : `${daysLeft} ${lang === 'en' ? 'Days' : '天'}`,
+                        ? t.expired
+                        : `${daysLeft} ${t.daysRemaining}`,
                       subtitle: isExpired
-                        ? (lang === 'en' ? 'Renew Now' : '立即续费')
+                        ? t.renewNow
                         : (lang === 'en' ? 'Remaining' : '剩余'),
                       icon: Clock,
                       color: isExpired ? 'text-red-400' : 'text-blue-400',
@@ -994,7 +1576,7 @@ function App() {
                       subtitle: couponsAvailable > 0
                         ? `${couponsAvailable} ${lang === 'en' ? 'Coupon' : '张优惠券'}`
                         : (lang === 'en' ? 'No Coupons' : '无优惠券'),
-                      icon: CreditCard,
+                      icon: Wallet,
                       color: 'text-amber-400',
                       bg: 'bg-amber-500/10',
                       valueColor: 'text-white'
@@ -1013,12 +1595,12 @@ function App() {
                       onClick={() => handleCardClick(i)}
                       className={`
                         relative overflow-hidden
-                        bg-[#0f172a]/60 backdrop-blur-xl border border-white/10 rounded-[20px] p-5
+                        bg-[#0f172a]/90 backdrop-blur-xl border border-white/10 rounded-[20px] p-5
                         shadow-[0_8px_32px_0_rgba(0,0,0,0.36),inset_0_1px_0_0_rgba(255,255,255,0.05)]
                         transition-all duration-300
-                        cursor-pointer hover:bg-[#0f172a]/80 hover:border-${m.color.replace('text-', '')}/30 
+                        cursor-pointer hover:bg-[#0f172a]/95 hover:border-${m.color.replace('text-', '')}/30
                         hover:shadow-[0_0_20px_rgba(59,130,246,0.15),inset_0_1px_0_0_rgba(255,255,255,0.1)]
-                        hover:scale-[1.03] active:scale-[0.98]
+                        hover:-translate-y-[2px] active:scale-[0.98]
                         min-h-[130px] flex flex-col justify-between
                         group
                       `}
@@ -1057,8 +1639,9 @@ function App() {
             {/* ROW 2: Connection Status + Notification Broadcast + Server Info */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
 
-              {/* 1. Connection Status Card - Enhanced */}
-              <DashboardCard className={`transition-all ${isConnected ? 'border-green-500/30 shadow-[0_0_20px_rgba(34,197,94,0.15)]' : 'border-white/10'}`}>
+              {/* 1. STATUS - Connection Status Card */}
+              <DashboardCard className={`min-h-[320px] flex flex-col transition-all ${isConnected ? 'border-green-500/30 shadow-[0_0_20px_rgba(34,197,94,0.15)]' : 'border-white/10'}`}>
+                {/* Header */}
                 <div className="flex items-center justify-between mb-4">
                   <div className="flex items-center gap-3">
                     <div className={`relative w-12 h-12 rounded-xl flex items-center justify-center ${isConnected ? 'bg-green-500/20' : 'bg-gray-500/20'}`}>
@@ -1072,29 +1655,36 @@ function App() {
                       )}
                     </div>
                     <div>
-                      <div className="text-xs text-gray-400 font-bold tracking-wider">STATUS</div>
+                      <div className="text-[10px] text-gray-400 font-bold tracking-wider uppercase">{t.statusCard}</div>
                       <div className={`font-bold text-sm ${isConnected ? 'text-green-400' : 'text-gray-400'}`}>
-                        {isConnected ? t.connected : t.disconnected}
+                        {isConnected ? `${t.connected} - US-East-1` : t.notConnected}
                       </div>
                     </div>
                   </div>
                   {isConnected && <div className="w-2 h-2 rounded-full bg-green-500 animate-ping" />}
                 </div>
 
-                {/* Metrics */}
-                {isConnected && (
-                  <div className="grid grid-cols-2 gap-3 mb-4">
-                    <div className="p-2 rounded-lg bg-black/20 border border-white/5">
-                      <div className="text-[10px] text-gray-500 uppercase">{t.latency}</div>
-                      <div className="text-lg font-mono font-bold text-green-400">{connectionMetrics.latency}ms</div>
+                {/* Connection Metrics */}
+                <div className="space-y-3 mb-4 flex-1">
+                  {isConnected ? (
+                    <>
+                      <div className="flex items-center justify-between p-2 rounded-lg bg-black/20 border border-white/5">
+                        <span className="text-xs text-gray-400">{t.latency}</span>
+                        <span className="text-sm font-mono font-bold text-green-400">{connectionMetrics.latency}ms</span>
+                      </div>
+                      <div className="flex items-center justify-between p-2 rounded-lg bg-black/20 border border-white/5">
+                        <span className="text-xs text-gray-400">{t.lastSpeedTest}</span>
+                        <span className="text-sm font-mono font-bold text-blue-400">45.2 Mbps</span>
+                      </div>
+                    </>
+                  ) : (
+                    <div className="text-center py-4 text-gray-500 text-sm">
+                      {lang === 'en' ? 'No active connection' : '当前无连接'}
                     </div>
-                    <div className="p-2 rounded-lg bg-black/20 border border-white/5">
-                      <div className="text-[10px] text-gray-500 uppercase">{t.packetLoss}</div>
-                      <div className="text-lg font-mono font-bold text-blue-400">{connectionMetrics.packetLoss}%</div>
-                    </div>
-                  </div>
-                )}
+                  )}
+                </div>
 
+                {/* Action Button */}
                 <button
                   onClick={toggleConnection}
                   className={`w-full py-3 rounded-xl font-bold text-sm flex items-center justify-center gap-2 transition-all ${isConnected
@@ -1107,107 +1697,151 @@ function App() {
                 </button>
               </DashboardCard>
 
-              {/* 2. Notification Broadcast Bar - Resized to 1 col */}
-              <DashboardCard className="bg-gradient-to-r from-blue-500/5 via-purple-500/5 to-blue-500/5 border-blue-500/20">
-                <div className="flex flex-col h-full justify-between">
-                  <div className="flex items-center justify-between mb-2">
-                    <div className="flex items-center gap-2">
-                      <div className="w-8 h-8 rounded-lg bg-blue-500/20 flex items-center justify-center border border-blue-500/30">
-                        <Bell size={16} className="text-blue-400" />
+              {/* 2. ANNOUNCEMENTS - Public Announcements Card */}
+              <DashboardCard className="min-h-[320px] flex flex-col bg-gradient-to-r from-blue-500/5 via-purple-500/5 to-blue-500/5 border-blue-500/20">
+                {/* Header */}
+                <div className="flex items-center justify-between mb-4">
+                  <div className="flex items-center gap-2">
+                    <div className="w-10 h-10 rounded-lg bg-blue-500/20 flex items-center justify-center border border-blue-500/30">
+                      <Bell size={18} className="text-blue-400" />
+                    </div>
+                    <div className="text-xs text-gray-400 font-bold tracking-wider uppercase">{t.announcementsCard}</div>
+                  </div>
+                </div>
+
+                {/* Announcements List */}
+                <div className="space-y-3 mb-4 flex-1">
+                  {[
+                    { icon: '🚀', title: lang === 'en' ? 'New Singapore Nodes Online' : '新增新加坡节点上线', date: '2 hours ago' },
+                    { icon: '🛡️', title: lang === 'en' ? 'Security Protocol Upgraded to v2.4' : '安全协议升级至 v2.4', date: '1 day ago' },
+                    { icon: '🎉', title: lang === 'en' ? 'Holiday Sale: 20% Off Annual Plans' : '假日促销：年费 8 折', date: '3 days ago' }
+                  ].map((announcement, i) => (
+                    <a
+                      key={i}
+                      href="#"
+                      className="flex items-start gap-3 p-3 rounded-lg hover:bg-white/5 transition-all border border-transparent hover:border-white/10 group"
+                    >
+                      <span className="text-lg shrink-0 mt-0.5">{announcement.icon}</span>
+                      <div className="flex-1 min-w-0">
+                        <div className="text-sm text-gray-200 group-hover:text-white font-medium line-clamp-2 transition-colors">
+                          {announcement.title}
+                        </div>
+                        <div className="text-xs text-gray-500 mt-1">{announcement.date}</div>
                       </div>
-                      <div className="text-xs text-gray-400 font-bold tracking-wider">ANNOUNCEMENTS</div>
-                    </div>
-                    <button onClick={() => setIsNotificationExpanded(!isNotificationExpanded)} className="text-blue-400 hover:text-white transition-colors">
-                      {isNotificationExpanded ? <ChevronDown size={16} className="rotate-180" /> : <ChevronDown size={16} />}
-                    </button>
-                  </div>
-
-                  <div className="flex-1 flex items-center">
-                    {(() => {
-                      const notifications = [
-                        { icon: '🚀', text: lang === 'en' ? 'New server locations added in Singapore!' : '新增新加坡服务器位置！' },
-                        { icon: '🛡️', text: lang === 'en' ? 'Security protocol updated to v2.4.' : '安全协议已更新至 v2.4。' },
-                        { icon: '🎉', text: lang === 'en' ? 'Holiday Sale: 20% off annual plans!' : '假日促销：年费 8 折。' }
-                      ];
-
-                      return !isNotificationExpanded ? (
-                        <div className="text-sm text-gray-300 line-clamp-2 animate-slideIn">
-                          {notifications[currentNotification].icon} {notifications[currentNotification].text}
-                        </div>
-                      ) : (
-                        <div className="space-y-2 max-h-[100px] overflow-y-auto custom-scrollbar">
-                          {notifications.map((notif, i) => (
-                            <div key={i} className="flex items-start gap-2 text-xs text-gray-300">
-                              <span className="shrink-0">{notif.icon}</span>
-                              <span>{notif.text}</span>
-                            </div>
-                          ))}
-                        </div>
-                      );
-                    })()}
-                  </div>
+                      <ChevronRight size={14} className="text-gray-600 group-hover:text-gray-400 transition-colors shrink-0 mt-1" />
+                    </a>
+                  ))}
                 </div>
+
+                {/* View All Link */}
+                <a
+                  href="#"
+                  className="block text-center text-xs font-bold text-blue-400 hover:text-blue-300 py-2 rounded-lg hover:bg-blue-500/10 transition-all"
+                >
+                  {t.viewAllAnnouncements} →
+                </a>
               </DashboardCard>
 
-              {/* 3. Security Status Card - New */}
-              <DashboardCard className="border-emerald-500/20 bg-emerald-500/5">
-                <div className="flex items-center gap-2 mb-4">
-                  <div className="w-8 h-8 rounded-lg bg-emerald-500/20 flex items-center justify-center border border-emerald-500/30">
-                    <Shield size={16} className="text-emerald-400" />
-                  </div>
-                  <div className="text-xs text-gray-400 font-bold tracking-wider">SECURITY RISK</div>
-                </div>
+              {/* 3. SECURITY RISK - Security Status Card */}
+              {(() => {
+                const dnsProtection = true;
+                const killSwitchEnabled = true;
+                const abnormalLoginCount = 0;
+                const hasRisk = !dnsProtection || !killSwitchEnabled || abnormalLoginCount > 0;
 
-                <div className="space-y-3">
-                  <div className="flex items-center justify-between">
-                    <span className="text-sm text-gray-300">{lang === 'en' ? 'DNS Leak Protection' : 'DNS 泄露保护'}</span>
-                    <div className="flex items-center gap-1.5 text-emerald-400 text-xs font-bold bg-emerald-500/10 px-2 py-0.5 rounded border border-emerald-500/20">
-                      <Check size={12} /> {lang === 'en' ? 'Enabled' : '已开启'}
+                return (
+                  <DashboardCard className={`min-h-[320px] flex flex-col ${hasRisk ? 'border-orange-500/30 bg-orange-500/5' : 'border-emerald-500/20 bg-emerald-500/5'}`}>
+                    {/* Header */}
+                    <div className="flex items-center gap-2 mb-4">
+                      <div className={`w-10 h-10 rounded-lg flex items-center justify-center border ${hasRisk ? 'bg-orange-500/20 border-orange-500/30' : 'bg-emerald-500/20 border-emerald-500/30'}`}>
+                        <Shield size={18} className={hasRisk ? 'text-orange-400' : 'text-emerald-400'} />
+                      </div>
+                      <div className="text-xs text-gray-400 font-bold tracking-wider uppercase">{t.securityRiskCard}</div>
                     </div>
-                  </div>
-                  <div className="flex items-center justify-between">
-                    <span className="text-sm text-gray-300">{lang === 'en' ? 'Kill Switch' : 'Kill Switch'}</span>
-                    <div className="flex items-center gap-1.5 text-emerald-400 text-xs font-bold bg-emerald-500/10 px-2 py-0.5 rounded border border-emerald-500/20">
-                      <Check size={12} /> {lang === 'en' ? 'Enabled' : '已开启'}
+
+                    {/* Security Status List */}
+                    <div className="space-y-3 mb-4 flex-1">
+                      <div className="flex items-center justify-between">
+                        <span className="text-sm text-gray-300">{t.dnsLeakProtection}</span>
+                        <div className={`flex items-center gap-1.5 text-xs font-bold px-2 py-1 rounded border ${dnsProtection ? 'text-emerald-400 bg-emerald-500/10 border-emerald-500/20' : 'text-red-400 bg-red-500/10 border-red-500/20'}`}>
+                          {dnsProtection ? <Check size={12} /> : <X size={12} />}
+                          {dnsProtection ? t.enabled : t.disabled}
+                        </div>
+                      </div>
+                      <div className="flex items-center justify-between">
+                        <span className="text-sm text-gray-300">{t.killSwitch}</span>
+                        <div className={`flex items-center gap-1.5 text-xs font-bold px-2 py-1 rounded border ${killSwitchEnabled ? 'text-emerald-400 bg-emerald-500/10 border-emerald-500/20' : 'text-red-400 bg-red-500/10 border-red-500/20'}`}>
+                          {killSwitchEnabled ? <Check size={12} /> : <X size={12} />}
+                          {killSwitchEnabled ? t.enabled : t.disabled}
+                        </div>
+                      </div>
+                      <div className="pt-2 border-t border-white/5 flex items-center justify-between">
+                        <span className="text-xs text-gray-400">{t.abnormalLogins}</span>
+                        <span className={`font-bold font-mono ${abnormalLoginCount > 0 ? 'text-red-400' : 'text-emerald-400'}`}>
+                          {abnormalLoginCount} {t.times}
+                        </span>
+                      </div>
                     </div>
-                  </div>
-                  <div className="pt-2 border-t border-white/5 flex items-center justify-between">
-                    <span className="text-xs text-gray-400">{lang === 'en' ? 'Abnormal Logins (24h)' : '最近 24 小时异常登录'}</span>
-                    <span className="text-emerald-400 font-bold font-mono">0 {lang === 'en' ? 'Times' : '次'}</span>
-                  </div>
-                </div>
-              </DashboardCard>
+
+                    {/* Action Link */}
+                    {hasRisk && (
+                      <a
+                        href="#"
+                        className="block text-center text-xs font-bold text-orange-400 hover:text-orange-300 py-2 rounded-lg hover:bg-orange-500/10 transition-all border border-orange-500/20"
+                      >
+                        {t.goToSecurityCenter} →
+                      </a>
+                    )}
+                  </DashboardCard>
+                );
+              })()}
 
             </div>
 
-            {/* ROW 3: Chart & Logs */}
+            {/* ROW 3: Traffic Chart & Server Info & Logs */}
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-              {/* Traffic Chart (2/3) */}
+              {/* Traffic Usage Chart (2/3) */}
               <DashboardCard className="lg:col-span-2 min-h-[350px] flex flex-col">
+                {/* Header with Summary */}
                 <div className="flex items-center justify-between mb-6">
                   <div className="flex items-center gap-2">
                     <Activity size={18} className="text-blue-400" />
-                    <h3 className="font-bold text-white">{t.traffic}</h3>
+                    <h3 className="font-bold text-white">{t.trafficUsage}</h3>
                   </div>
-                  <div className="flex bg-black/20 rounded-lg p-1 border border-white/5">
-                    <button
-                      onClick={() => setTrafficTimeRange('7d')}
-                      className={`px-3 py-1 rounded-md text-xs font-bold transition-all ${trafficTimeRange === '7d'
-                        ? 'bg-blue-600 text-white shadow-lg shadow-blue-500/20'
-                        : 'text-gray-400 hover:text-white'
-                        }`}
-                    >
-                      {lang === 'en' ? 'Last 7 Days' : '最近 7 天'}
-                    </button>
-                    <button
-                      onClick={() => setTrafficTimeRange('30d')}
-                      className={`px-3 py-1 rounded-md text-xs font-bold transition-all ${trafficTimeRange === '30d'
-                        ? 'bg-blue-600 text-white shadow-lg shadow-blue-500/20'
-                        : 'text-gray-400 hover:text-white'
-                        }`}
-                    >
-                      {lang === 'en' ? 'Last 30 Days' : '最近 30 天'}
-                    </button>
+
+                  {/* Right: Summary + Tabs */}
+                  <div className="flex items-center gap-4">
+                    {/* Summary Badge */}
+                    <div className="hidden md:flex flex-col items-end text-xs">
+                      <div className="text-gray-400">
+                        {t.cycleUsed}: <span className="text-white font-bold">376 GB</span> <span className="text-purple-400">(75%)</span>
+                      </div>
+                      <div className="text-gray-500 mt-0.5">
+                        {t.estimatedDepletion} <span className="text-orange-400 font-bold">7 {lang === 'en' ? 'days' : '天'}</span> {lang === 'en' ? 'to deplete' : '用尽'}
+                      </div>
+                    </div>
+
+                    {/* Tabs */}
+                    <div className="flex bg-black/20 rounded-lg p-1 border border-white/5">
+                      <button
+                        onClick={() => setTrafficTimeRange('7d')}
+                        className={`px-3 py-1 rounded-md text-xs font-bold transition-all ${trafficTimeRange === '7d'
+                          ? 'bg-gradient-to-r from-blue-600 to-purple-600 text-white shadow-lg shadow-blue-500/20'
+                          : 'text-gray-400 hover:text-white'
+                          }`}
+                      >
+                        {t.last7Days}
+                      </button>
+                      <button
+                        onClick={() => setTrafficTimeRange('30d')}
+                        className={`px-3 py-1 rounded-md text-xs font-bold transition-all ${trafficTimeRange === '30d'
+                          ? 'bg-gradient-to-r from-blue-600 to-purple-600 text-white shadow-lg shadow-blue-500/20'
+                          : 'text-gray-400 hover:text-white'
+                          }`}
+                      >
+                        {t.last30Days}
+                      </button>
+                    </div>
                   </div>
                 </div>
 
@@ -1234,28 +1868,37 @@ function App() {
                 <DashboardCard>
                   <div className="flex justify-between items-start mb-4">
                     <div>
-                      <div className="text-xs text-gray-400 font-bold tracking-wider mb-1">{lang === 'en' ? 'CURRENT SERVER' : '当前服务器'}</div>
+                      <div className="text-[10px] text-gray-400 font-bold tracking-wider uppercase mb-1">{t.currentServer}</div>
                       <h3 className="text-xl font-bold text-white flex items-center gap-2">
                         <span className="text-2xl">🇺🇸</span> US-East-1
                       </h3>
                       <div className="text-sm text-gray-400 mt-1">Virginia, USA</div>
                     </div>
-                    <button className="p-2 rounded-lg bg-white/5 hover:bg-white/10 text-gray-300 hover:text-white transition-colors border border-white/5">
-                      <RefreshCw size={16} />
+                    <button className="flex items-center gap-1.5 px-3 py-2 rounded-lg bg-blue-500/10 hover:bg-blue-500/20 text-blue-400 hover:text-blue-300 transition-all border border-blue-500/20 text-xs font-bold">
+                      <RefreshCw size={14} />
+                      {t.changeServer}
                     </button>
                   </div>
 
                   <div className="space-y-3">
+                    {/* Latency with color coding */}
                     <div className="flex items-center justify-between p-2 rounded-lg bg-black/20 border border-white/5">
                       <span className="text-xs text-gray-400">{t.latency}</span>
                       <span className="text-sm font-mono font-bold text-green-400">45ms</span>
                     </div>
-                    <div className="flex items-center justify-between p-2 rounded-lg bg-black/20 border border-white/5">
-                      <span className="text-xs text-gray-400">Load</span>
-                      <span className="text-sm font-mono font-bold text-blue-400">32%</span>
+                    {/* Load with progress bar */}
+                    <div className="p-2 rounded-lg bg-black/20 border border-white/5">
+                      <div className="flex items-center justify-between mb-2">
+                        <span className="text-xs text-gray-400">{t.load}</span>
+                        <span className="text-sm font-mono font-bold text-blue-400">32%</span>
+                      </div>
+                      <div className="h-1.5 bg-black/40 rounded-full overflow-hidden">
+                        <div className="h-full w-[32%] bg-gradient-to-r from-blue-500 to-cyan-400" />
+                      </div>
                     </div>
+                    {/* Protocol */}
                     <div className="flex items-center justify-between p-2 rounded-lg bg-black/20 border border-white/5">
-                      <span className="text-xs text-gray-400">Protocol</span>
+                      <span className="text-xs text-gray-400">{t.protocol}</span>
                       <span className="text-sm font-bold text-purple-400">WireGuard</span>
                     </div>
                   </div>
@@ -1264,7 +1907,7 @@ function App() {
                 {/* 2. Connection Logs Card */}
                 <DashboardCard className="flex-1 flex flex-col">
                   <div className="flex items-center justify-between mb-4">
-                    <h3 className="font-bold text-white text-sm">{lang === 'en' ? 'CONNECTION LOGS' : '连接日志'}</h3>
+                    <h3 className="font-bold text-white text-sm uppercase tracking-wide">{t.connectionLogs}</h3>
                   </div>
 
                   <div className="flex-1 space-y-3">
@@ -1293,19 +1936,162 @@ function App() {
                     ))}
                   </div>
 
-                  <button className="w-full mt-4 py-2 text-xs font-bold text-gray-400 hover:text-white border border-white/5 hover:border-white/10 rounded-lg transition-all">
-                    {lang === 'en' ? 'View All Logs' : '查看全部日志'}
-                  </button>
+                  <a
+                    href="#"
+                    className="block text-center w-full mt-4 py-2 text-xs font-bold text-blue-400 hover:text-blue-300 border border-white/5 hover:border-blue-500/20 rounded-lg transition-all hover:bg-blue-500/5"
+                  >
+                    {t.viewAllLogs} →
+                  </a>
                 </DashboardCard>
 
               </div>
             </div>
 
+            {/* ROW 4: Guidance Layer - Subscription Import & Quick Help */}
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+
+              {/* Left: Subscription Import Card */}
+              <DashboardCard>
+                <div className="flex items-center gap-2 mb-3">
+                  <Download size={18} className="text-purple-400" />
+                  <h3 className="font-bold text-white">{t.subscriptionImport}</h3>
+                </div>
+                <p className="text-sm text-gray-400 mb-6">{t.importDescription}</p>
+
+                {/* Import Buttons Grid */}
+                <div className="grid grid-cols-2 gap-3">
+                  {[
+                    { name: 'Clash / ClashX', icon: '⚡' },
+                    { name: 'Shadowrocket', icon: '🚀' },
+                    { name: 'Quantumult X', icon: '🔷' },
+                    { name: 'V2Ray / ' + (lang === 'en' ? 'General' : '通用'), icon: '📡' }
+                  ].map((client, i) => (
+                    <button
+                      key={i}
+                      onClick={() => {
+                        // Simulate copy subscription URL
+                        setCopiedItem(`client-${i}`);
+                        setTimeout(() => setCopiedItem(null), 2000);
+                      }}
+                      className="flex items-center justify-between p-3 rounded-lg bg-gradient-to-br from-purple-500/10 to-blue-500/10 border border-purple-500/20 hover:border-purple-400/40 text-left transition-all hover:scale-[1.02] group"
+                    >
+                      <div className="flex items-center gap-2">
+                        <span className="text-lg">{client.icon}</span>
+                        <div>
+                          <div className="text-sm font-bold text-white group-hover:text-purple-300 transition-colors">
+                            {client.name}
+                          </div>
+                          <div className="text-xs text-gray-500">
+                            {copiedItem === `client-${i}` ? t.copied : t.oneClickImport}
+                          </div>
+                        </div>
+                      </div>
+                      <Download size={14} className="text-purple-400 group-hover:text-purple-300 transition-colors" />
+                    </button>
+                  ))}
+                </div>
+              </DashboardCard>
+
+              {/* Right: Domains & Quick Help Card */}
+              <DashboardCard className="flex flex-col">
+                {/* Domains Section */}
+                <div className="mb-6">
+                  <div className="flex items-center gap-2 mb-3">
+                    <Link2 size={18} className="text-blue-400" />
+                    <h3 className="font-bold text-white text-sm">{t.availableDomains}</h3>
+                  </div>
+                  <div className="space-y-2">
+                    {[
+                      'app.argusvpn.com',
+                      'backup.argusvpn.net',
+                      'cn.argusvpn.io'
+                    ].map((domain, i) => (
+                      <div key={i} className="flex items-center justify-between p-2 rounded-lg bg-black/20 border border-white/5 hover:border-blue-500/20 transition-all group">
+                        <code className="text-xs text-gray-300 font-mono">{domain}</code>
+                        <button
+                          onClick={() => {
+                            navigator.clipboard.writeText(domain);
+                            setCopiedItem(`domain-${i}`);
+                            setTimeout(() => setCopiedItem(null), 2000);
+                          }}
+                          className="flex items-center gap-1 px-2 py-1 rounded bg-blue-500/10 hover:bg-blue-500/20 text-blue-400 text-xs font-bold transition-all"
+                        >
+                          {copiedItem === `domain-${i}` ? (
+                            <>
+                              <Check size={12} />
+                              {t.copied}
+                            </>
+                          ) : (
+                            <>
+                              <Copy size={12} />
+                              {t.copy}
+                            </>
+                          )}
+                        </button>
+                      </div>
+                    ))}
+                  </div>
+                  <a
+                    href="#"
+                    className="block text-center text-xs font-bold text-blue-400 hover:text-blue-300 mt-3 py-2 rounded-lg hover:bg-blue-500/5 transition-all"
+                  >
+                    {t.viewAllDomains} →
+                  </a>
+                </div>
+
+                {/* Quick Help Section */}
+                <div className="flex-1 border-t border-white/5 pt-6">
+                  <div className="flex items-center gap-2 mb-4">
+                    <HelpCircle size={18} className="text-emerald-400" />
+                    <h3 className="font-bold text-white text-sm">{t.quickHelp}</h3>
+                  </div>
+                  <div className="space-y-2">
+                    {[
+                      { q: t.faq1, a: t.faq1Answer },
+                      { q: t.faq2, a: t.faq2Answer },
+                      { q: t.faq3, a: t.faq3Answer }
+                    ].map((faq, i) => (
+                      <div key={i} className="border border-white/5 rounded-lg overflow-hidden">
+                        <button
+                          onClick={() => setExpandedFAQ(expandedFAQ === i ? null : i)}
+                          className="w-full flex items-center justify-between p-3 text-left hover:bg-white/5 transition-all"
+                        >
+                          <span className="text-sm text-gray-300 font-medium">{faq.q}</span>
+                          <ChevronDown
+                            size={16}
+                            className={`text-gray-400 transition-transform ${expandedFAQ === i ? 'rotate-180' : ''}`}
+                          />
+                        </button>
+                        {expandedFAQ === i && (
+                          <div className="px-3 pb-3 text-xs text-gray-400 space-y-2 animate-fadeIn">
+                            <p>{faq.a}</p>
+                            <a
+                              href="#"
+                              onClick={(e) => {
+                                e.preventDefault();
+                                setCurrentPage('help');
+                              }}
+                              className="inline-flex items-center gap-1 text-emerald-400 hover:text-emerald-300 font-bold"
+                            >
+                              {t.viewFullGuide} →
+                            </a>
+                          </div>
+                        )}
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </DashboardCard>
+
+            </div>
+
           </div>
+          )}
         </main>
       </div>
     </div>
   );
 }
+
 
 export default App;
