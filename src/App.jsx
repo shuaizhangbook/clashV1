@@ -9,6 +9,14 @@ import {
 } from 'lucide-react';
 import { CONFIG, getConfig, isMobile } from './config';
 
+// API Services
+import { authAPI } from './services/api/auth';
+import { userAPI } from './services/api/user';
+import { trafficAPI } from './services/api/traffic';
+import { nodesAPI } from './services/api/nodes';
+import { walletAPI, notificationsAPI } from './services/api/wallet';
+import { setTokens, clearTokens, setUser, clearUser } from './utils/auth';
+
 // --- Configuration & Constants ---
 // (Using imported CONFIG from ./config.js for consistent 3D settings)
 
@@ -661,6 +669,7 @@ function App() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loginError, setLoginError] = useState('');
+  const [isLoggingIn, setIsLoggingIn] = useState(false);
   const [countdownTick, setCountdownTick] = useState(0); // For countdown timer updates
 
   // Notification Broadcast State
@@ -761,19 +770,69 @@ function App() {
   // Server List Tabs
   const [serverTab, setServerTab] = useState('recent');
 
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
-    if (email && password) {
-      localStorage.setItem('currentUser', JSON.stringify({ email }));
+
+    // Clear previous errors
+    setLoginError('');
+
+    // Validation
+    if (!email || !password) {
+      setLoginError(lang === 'en' ? 'Please enter email and password' : '请输入邮箱和密码');
+      return;
+    }
+
+    setIsLoggingIn(true);
+
+    try {
+      // Call real API
+      const response = await authAPI.login(email, password);
+
+      // Store tokens
+      setTokens(response.accessToken, response.refreshToken);
+
+      // Store user data
+      setUser(response.user);
+
+      // Update login state
       setIsLoggedIn(true);
-    } else {
-      setLoginError(lang === 'en' ? 'Invalid credentials' : '账号或密码错误');
+
+      // Clear form
+      setEmail('');
+      setPassword('');
+
+    } catch (error) {
+      console.error('Login failed:', error);
+
+      // Handle different error types
+      if (error.response?.status === 401) {
+        setLoginError(lang === 'en' ? 'Invalid email or password' : '邮箱或密码错误');
+      } else if (error.code === 'ECONNABORTED' || error.message === 'Network Error') {
+        setLoginError(lang === 'en' ? 'Network error. Please check your connection.' : '网络错误，请检查连接');
+      } else {
+        setLoginError(lang === 'en' ? 'Login failed. Please try again.' : '登录失败，请重试');
+      }
+    } finally {
+      setIsLoggingIn(false);
     }
   };
 
-  const handleLogout = () => {
-    localStorage.removeItem('currentUser');
-    setIsLoggedIn(false);
+  const handleLogout = async () => {
+    try {
+      // Call logout API
+      await authAPI.logout();
+    } catch (error) {
+      console.error('Logout API failed:', error);
+      // Continue with logout even if API fails
+    } finally {
+      // Clear all tokens and user data
+      clearTokens();
+      clearUser();
+      localStorage.removeItem('currentUser');
+
+      // Update state
+      setIsLoggedIn(false);
+    }
   };
 
   const toggleConnection = () => setIsConnected(!isConnected);
@@ -898,8 +957,19 @@ function App() {
                             placeholder={t.placeholderPassword}
                           />
                         </div>
-                        <button type="submit" className="w-full py-3.5 bg-[#00f3ff] hover:bg-[#33f6ff] text-slate-900 font-bold rounded-lg transition-all hover:scale-[1.02] shadow-[0_0_20px_rgba(0,243,255,0.3)]">
-                          {t.signInBtn}
+                        <button
+                          type="submit"
+                          disabled={isLoggingIn}
+                          className="w-full py-3.5 bg-[#00f3ff] hover:bg-[#33f6ff] text-slate-900 font-bold rounded-lg transition-all hover:scale-[1.02] shadow-[0_0_20px_rgba(0,243,255,0.3)] disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
+                        >
+                          {isLoggingIn ? (
+                            <span className="flex items-center justify-center gap-2">
+                              <RefreshCw size={16} className="animate-spin" />
+                              {lang === 'en' ? 'Signing in...' : '登录中...'}
+                            </span>
+                          ) : (
+                            t.signInBtn
+                          )}
                         </button>
                       </form>
                     </div>
